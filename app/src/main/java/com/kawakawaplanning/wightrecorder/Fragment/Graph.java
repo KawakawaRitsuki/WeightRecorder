@@ -22,6 +22,6 @@ public class Graph extends Fragment{
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_graph, container, false);
-        return null;
+        return v;
     }
 }

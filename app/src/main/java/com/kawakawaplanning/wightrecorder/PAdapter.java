@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.kawakawaplanning.wightrecorder.Fragment.Calc;
 import com.kawakawaplanning.wightrecorder.Fragment.Graph;
-import com.kawakawaplanning.wightrecorder.Fragment.List;
+import com.kawakawaplanning.wightrecorder.Fragment.LifeListFragment;
 import com.kawakawaplanning.wightrecorder.Fragment.Record;
 
 
@@ -24,7 +24,7 @@ public class PAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:return new Record();
-            case 1:return new List();
+            case 1:return new LifeListFragment();
             case 2:return new Graph();
             case 3:return new Calc();
         }

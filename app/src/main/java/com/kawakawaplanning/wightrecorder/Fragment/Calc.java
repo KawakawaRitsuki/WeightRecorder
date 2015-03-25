@@ -22,6 +22,6 @@ public class Calc extends Fragment{
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_calc, container, false);
-        return null;
+        return v;
     }
 }

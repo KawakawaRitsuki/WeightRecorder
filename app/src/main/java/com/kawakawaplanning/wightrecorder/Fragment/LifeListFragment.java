@@ -11,9 +11,9 @@ import com.kawakawaplanning.wightrecorder.R;
 /**
  * Created by KP on 2015/03/25.
  */
-public class List extends Fragment{
+public class LifeListFragment extends Fragment{
 
-    public List() {
+    public LifeListFragment() {
         // Required empty public constructor
     }
 
@@ -22,6 +22,6 @@ public class List extends Fragment{
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_list, container, false);
-        return null;
+        return v;
     }
 }
