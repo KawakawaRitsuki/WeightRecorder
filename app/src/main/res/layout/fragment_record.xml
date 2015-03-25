@@ -88,14 +88,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Commit"
-            android:id="@+id/commitBtn"
-            android:onClick="o" />
+            android:id="@+id/commitBtn"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Read"
-            android:id="@+id/readBtn"
-            android:onClick="onClick" />
+            android:id="@+id/readBtn"/>
     </LinearLayout>
 </LinearLayout>

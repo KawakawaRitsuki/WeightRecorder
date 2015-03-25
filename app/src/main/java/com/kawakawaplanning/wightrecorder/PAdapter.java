@@ -4,11 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.kawakawaplanning.wightrecorder.Fragment.Calc;
-import com.kawakawaplanning.wightrecorder.Fragment.Graph;
+import com.kawakawaplanning.wightrecorder.Fragment.CalcFragment;
+import com.kawakawaplanning.wightrecorder.Fragment.GraphFragment;
 import com.kawakawaplanning.wightrecorder.Fragment.LifeListFragment;
-import com.kawakawaplanning.wightrecorder.Fragment.Record;
-
+import com.kawakawaplanning.wightrecorder.Fragment.RecordFragment;
 
 
 /**
@@ -23,10 +22,10 @@ public class PAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch(position){
-            case 0:return new Record();
+            case 0:return new RecordFragment();
             case 1:return new LifeListFragment();
-            case 2:return new Graph();
-            case 3:return new Calc();
+            case 2:return new GraphFragment();
+            case 3:return new CalcFragment();
         }
         return null;
     }

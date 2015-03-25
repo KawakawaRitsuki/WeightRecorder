@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * Created by KP on 2015/03/25.
  */
-public class Record extends Fragment{
+public class RecordFragment extends Fragment implements View.OnClickListener{
 
     private TextView mTextView1;
     private EditText mWightET;
@@ -30,6 +31,8 @@ public class Record extends Fragment{
     private EditText mFatET;
     private TextView mTextView4;
     private EditText mPressuredownET;
+    private Button mCommitBtn;
+    private Button mReadBtn;
 
     private void assignViews(View v) {
         mTextView1 = (TextView) v.findViewById(R.id.textView1);
@@ -40,11 +43,15 @@ public class Record extends Fragment{
         mFatET = (EditText) v.findViewById(R.id.fatET);
         mTextView4 = (TextView) v.findViewById(R.id.textView4);
         mPressuredownET = (EditText) v.findViewById(R.id.pressuredownET);
+        mCommitBtn = (Button) v.findViewById(R.id.commitBtn);
+        mReadBtn = (Button) v.findViewById(R.id.readBtn);
+        mCommitBtn.setOnClickListener(this);
+        mReadBtn.setOnClickListener(this);
     }
 
 
 
-    public Record() {
+    public RecordFragment() {
         // Required empty public constructor
     }
 
@@ -62,8 +69,8 @@ public class Record extends Fragment{
 
     }
 
-
-    public void on(View v) {
+    @Override
+    public void onClick(View v) {
 
         switch (v.getId()) {
 
@@ -84,11 +91,11 @@ public class Record extends Fragment{
             case R.id.readBtn:
                 List<LifeItem> list = new Select().from(LifeItem.class).execute();
                 for (LifeItem i : list) {
-                    Log.d("day: ", i.day);
-                    Log.d("wight: ", i.wight + "");
-                    Log.d("fat: ", i.fat + "");
-                    Log.d("puu: ", i.puu + "");
-                    Log.d("pud: ", i.pud + "");
+                    Log.d("day:", i.day);
+                    Log.d("wight:", i.wight + "");
+                    Log.d("fat:", i.fat + "");
+                    Log.d("puu:", i.puu + "");
+                    Log.d("pud:", i.pud + "");
                 }
                 break;
 

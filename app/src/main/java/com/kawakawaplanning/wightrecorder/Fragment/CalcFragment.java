@@ -11,9 +11,9 @@ import com.kawakawaplanning.wightrecorder.R;
 /**
  * Created by KP on 2015/03/25.
  */
-public class Calc extends Fragment{
+public class CalcFragment extends Fragment{
 
-    public Calc() {
+    public CalcFragment() {
         // Required empty public constructor
     }
 
