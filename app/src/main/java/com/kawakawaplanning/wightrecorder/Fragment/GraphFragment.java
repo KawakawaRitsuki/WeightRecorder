@@ -19,7 +19,7 @@ import com.kawakawaplanning.wightrecorder.R;
 import java.util.List;
 
 
-public class GraphFragment extends Fragment {
+public class GraphFragment extends Fragment{
 
     LinearLayout graphLayout;
     public GraphFragment() {

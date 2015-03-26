@@ -28,6 +28,9 @@ public class LifeItem extends Model {
     @Column(name = "pressuredown")
     public int pud;
 
+    @Column(name = "bmi")
+    public int bmi;
+
     public LifeItem() {
         super();
     }

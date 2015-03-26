@@ -2,7 +2,6 @@ package com.kawakawaplanning.wightrecorder.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.activeandroid.query.Select;
 import com.kawakawaplanning.wightrecorder.LifeItem;
 import com.kawakawaplanning.wightrecorder.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Created by KP on 2015/03/25.
@@ -32,7 +29,6 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
     private TextView mTextView4;
     private EditText mPressuredownET;
     private Button mCommitBtn;
-    private Button mReadBtn;
 
     private void assignViews(View v) {
         mTextView1 = (TextView) v.findViewById(R.id.textView1);
@@ -44,9 +40,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
         mTextView4 = (TextView) v.findViewById(R.id.textView4);
         mPressuredownET = (EditText) v.findViewById(R.id.pressuredownET);
         mCommitBtn = (Button) v.findViewById(R.id.commitBtn);
-        mReadBtn = (Button) v.findViewById(R.id.readBtn);
         mCommitBtn.setOnClickListener(this);
-        mReadBtn.setOnClickListener(this);
     }
 
 
@@ -84,23 +78,22 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
                 lifeItem.fat = Integer.parseInt(mFatET.getEditableText().toString());
                 lifeItem.puu = Integer.parseInt(mPressureupET.getEditableText().toString());
                 lifeItem.pud = Integer.parseInt(mPressuredownET.getEditableText().toString());
+                int bmi = bmi(Integer.parseInt(mWightET.getEditableText().toString()));
+
+                lifeItem.bmi = bmi;
 
                 lifeItem.save();
                 break;
 
-            case R.id.readBtn:
-                List<LifeItem> list = new Select().from(LifeItem.class).execute();
-                for (LifeItem i : list) {
-                    Log.d("day:", i.day);
-                    Log.d("wight:", i.wight + "");
-                    Log.d("fat:", i.fat + "");
-                    Log.d("puu:", i.puu + "");
-                    Log.d("pud:", i.pud + "");
-                }
-                break;
 
         }
 
+    }
+
+    public int bmi(int wight){
+
+        int bmi = wight;
+        return bmi;
     }
 
 }
