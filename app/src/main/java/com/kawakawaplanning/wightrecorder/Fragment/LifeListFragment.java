@@ -40,11 +40,14 @@ public class LifeListFragment extends Fragment{
 
     public void onStart(){
         super.onStart();
+
         List<LifeItem> list = new Select().from(LifeItem.class).execute();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
+
         for (LifeItem i : list) {
-            adapter.add(i.day + ":" + "体重/"+i.wight);
+            adapter.add(i.day + ":" + "体重/"+i.wight + ":体脂肪" + i.fat);
         }
+
         mListView.setAdapter(adapter);
     }
 }
