@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBarActivity;
 
 
 public class MainActivity extends ActionBarActivity {
+public static final int PREFERENCE_INIT = 0;
+public static final int PREFERENCE_BOOTED = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,6 @@ public class MainActivity extends ActionBarActivity {
         // ダイアログの設定
         alertDialog.setTitle("FirstBoot");          //タイトル
         alertDialog.setMessage("初回メッセージ");      //内容
-        alertDialog.setIcon(R.drawable.icon);   //アイコン設定
 
         alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -49,4 +50,25 @@ public class MainActivity extends ActionBarActivity {
             alertDialog.show();
         }
     }
+    private void setState(int state) {
+        // SharedPreferences設定を保存
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        sp.edit().putInt("InitState", state).commit();
+        
+        //ログ表示
+        // output( String.valueOf(state) );
+    }
+    
+    //データ読み出し
+    private int getState() {
+        // 読み込み
+        int state;
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        state = sp.getInt("InitState", PREFERENCE_INIT);
+        
+        //ログ表示
+        // output( String.valueOf(state) );
+        return state;
+    }
+
 }
