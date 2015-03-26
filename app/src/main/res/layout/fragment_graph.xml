@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.rakuishi.fragment.fragment.SampleFragment">
 
-    <com.jjoe64.graphview.GraphView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dip"
-        android:id="@+id/graphLayout" />
+        android:id="@+id/graphLayout"
+        android:orientation="horizontal"/>
 
 </LinearLayout>

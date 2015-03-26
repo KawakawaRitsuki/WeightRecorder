@@ -25,15 +25,22 @@ public class GraphFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_graph, container, false);
 
-        GraphView graph = (GraphView) v.findViewById(R.id.graphLayout);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
-        graph.addSeries(series);
+        LineGraphView graphView = new LineGraphView(this, "SampleGraphView");
+// 適当にデータを作成
+        int num = 10;
+        GraphView.GraphViewData[] data = new GraphView.GraphViewData[num];
+        double a = 0.0d;
+        for (int i = 0; i < num; i++) {
+            a += 0.5d;
+            data[i] = new GraphView.GraphViewData(i, Math.sin(a));
+        }
+// 線の太さ
+        int thickness = 5;
+        GraphViewSeries.GraphViewSeriesStyle graphViewSeriesStyle = new GraphViewSeries.GraphViewSeriesStyle(Color.BLUE, thickness);
+        GraphViewSeries graphViewSeries = new GraphViewSeries("Sample", graphViewSeriesStyle, data);
+        graphView.addSeries(graphViewSeries);
+        LinearLayout graphLayout = (LinearLayout)v.findViewById(R.id.graphLayout);
+        graphLayout.addSubView(graphView);
 
 
 
