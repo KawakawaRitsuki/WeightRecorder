@@ -84,14 +84,14 @@ public class MainActivity extends ActionBarActivity {
 
 
     }
-    //データ保存
+
     private void setState(int state) {
         // SharedPreferences設定を保存
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.edit().putInt("InitState", state).commit();
 
         //ログ表示
-//        output( String.valueOf(state) );
+        // output( String.valueOf(state) );
     }
 
     //データ読み出し
