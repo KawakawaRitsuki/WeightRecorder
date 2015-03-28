@@ -1,7 +1,11 @@
 package com.kawakawaplanning.wightrecorder.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import com.kawakawaplanning.wightrecorder.LifeItem;
 import com.kawakawaplanning.wightrecorder.R;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -29,6 +34,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
     private TextView mTextView4;
     private EditText mPressuredownET;
     private Button mCommitBtn;
+    Vibrator vibrator;
 
     private void assignViews(View v) {
         mTextView1 = (TextView) v.findViewById(R.id.textView1);
@@ -41,6 +47,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
         mPressuredownET = (EditText) v.findViewById(R.id.pressuredownET);
         mCommitBtn = (Button) v.findViewById(R.id.commitBtn);
         mCommitBtn.setOnClickListener(this);
+        vibrator = (Vibrator) getActivity().getSystemService(getActivity().VIBRATOR_SERVICE);
     }
 
 
@@ -54,6 +61,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_record, container, false);
+
         assignViews(v);
         return v;
     }
@@ -66,23 +74,33 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
+     vibrator.vibrate(50);
+
         switch (v.getId()) {
 
             case R.id.commitBtn:
-                Calendar c = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-                LifeItem lifeItem = new LifeItem();
 
-                lifeItem.day = sdf.format(c.getTime());
-                lifeItem.wight = Integer.parseInt(mWightET.getEditableText().toString());
-                lifeItem.fat = Integer.parseInt(mFatET.getEditableText().toString());
-                lifeItem.puu = Integer.parseInt(mPressureupET.getEditableText().toString());
-                lifeItem.pud = Integer.parseInt(mPressuredownET.getEditableText().toString());
-                int bmi = bmi(Integer.parseInt(mWightET.getEditableText().toString()));
+                Boolean flag = false;
+                if (mWightET.length() == 0){
+                    mWightET.setError("入力してください。");
+                    flag = true;
+                }
+                if (mFatET.length() == 0){
+                    mFatET.setError("入力してください。");
+                    flag = true;
+                }
+                if (mPressuredownET.length() == 0){
+                    mPressuredownET.setError("入力してください。");
+                    flag = true;
+                }
+                if (mPressureupET.length() == 0){
+                    mPressureupET.setError("入力してください。");
+                    flag = true;
+                }
+                if (!flag){
+                    commit();
+                }
 
-                lifeItem.bmi = bmi;
-
-                lifeItem.save();
                 break;
 
 
@@ -90,10 +108,49 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    public int bmi(int wight){
+    public void commit(){
+        int getWight = Integer.parseInt(mWightET.getEditableText().toString());
+        int getFat = Integer.parseInt(mFatET.getEditableText().toString());
+        int getPuu = Integer.parseInt(mPressureupET.getEditableText().toString());
+        int getPud = Integer.parseInt(mPressuredownET.getEditableText().toString());
 
-        int bmi = wight;
-        return bmi;
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        LifeItem lifeItem = new LifeItem();
+
+        lifeItem.day = sdf.format(c.getTime());
+        lifeItem.wight = getWight;
+        lifeItem.fat = getFat;
+        lifeItem.puu = getPuu;
+        lifeItem.pud = getPud;
+
+        double bmi = bmi(Integer.parseInt(mWightET.getEditableText().toString()));
+        lifeItem.bmi = bmi;
+
+        lifeItem.save();
+
+    }
+
+
+
+    public double bmi(int wight){
+
+        SharedPreferences data = getActivity().getSharedPreferences("HeightSave", Context.MODE_PRIVATE);
+        double height = data.getInt("Height",-1 ) / 100F;
+
+
+
+
+        double hei = height * height;
+
+        double bmi = wight / hei;
+
+        BigDecimal bd = new BigDecimal(bmi);
+        BigDecimal bd3 = bd.setScale(1, BigDecimal.ROUND_DOWN);
+
+        Log.v("kp","height" + height + "wight" + wight + "bmi" + bmi);
+
+        return bd3.doubleValue();
     }
 
 }

@@ -29,7 +29,7 @@ public class LifeItem extends Model {
     public int pud;
 
     @Column(name = "bmi")
-    public int bmi;
+    public double bmi;
 
     public LifeItem() {
         super();

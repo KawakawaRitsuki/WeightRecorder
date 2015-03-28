@@ -27,5 +27,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.jjoe64:graphview:3.1.4'
+    compile 'com.baoyz.pullrefreshlayout:library:1.0.1'
     compile project(':HoloGraphLibrary')
 }

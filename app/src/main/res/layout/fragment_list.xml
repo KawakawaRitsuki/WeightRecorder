@@ -4,11 +4,19 @@
     android:layout_height="match_parent"
     tools:context="com.rakuishi.fragment.fragment.SampleFragment">
 
-    <ListView
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listView"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listView"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
+
+    </com.baoyz.widget.PullRefreshLayout>
+
 
 </LinearLayout>
