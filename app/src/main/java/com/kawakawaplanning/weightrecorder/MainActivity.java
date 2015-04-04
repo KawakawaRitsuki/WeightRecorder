@@ -1,4 +1,4 @@
-package com.kawakawaplanning.wightrecorder;
+package com.kawakawaplanning.weightrecorder;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setState(PREFERENCE_BOOTED);
 
 
         ViewPager vp = (ViewPager)findViewById(R.id.mypager);//定義
@@ -36,6 +36,8 @@ public class MainActivity extends ActionBarActivity {
 
         vp.setCurrentItem(1);
 
+
+
         PagerTabStrip pts = (PagerTabStrip)findViewById(R.id.pagertabstrip);
 
         pts.setDrawFullUnderline(true);
@@ -43,47 +45,6 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-    @Override
-    public void onResume(){
-        super.onResume();
-
-        AlertDialog.Builder alertDialog=new AlertDialog.Builder(this);
-
-        LayoutInflater inflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        final View layout = inflater.inflate(R.layout.dialog,(ViewGroup)findViewById(R.id.alertdialog_layout));
-        heiEt = (EditText)layout.findViewById(R.id.editText001);
-        nameEt = (EditText)layout.findViewById(R.id.editText002);
-
-        alertDialog.setView(layout);
-        // ダイアログの設定
-        alertDialog.setTitle("あなたについて教えてください！");          //タイトル
-
-        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                //初回表示完了
-                setState(PREFERENCE_BOOTED);
-                String hei = heiEt.getEditableText().toString();
-                String name = nameEt.getEditableText().toString();
-
-                SharedPreferences data = getSharedPreferences("HeightSave", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = data.edit();
-                editor.putInt("Height", Integer.parseInt(hei));
-                editor.putString("Name", nameEt.getEditableText().toString());
-                editor.apply();
-
-            }
-        });
-
-        // ダイアログの作成と表示
-        if(PREFERENCE_INIT == getState() ){
-            //初回起動時のみ表示する
-            alertDialog.create();
-            alertDialog.show();
-        }
-
-
-    }
 
     private void setState(int state) {
         // SharedPreferences設定を保存
@@ -94,17 +55,6 @@ public class MainActivity extends ActionBarActivity {
         // output( String.valueOf(state) );
     }
 
-    //データ読み出し
-    private int getState() {
-        // 読み込み
-        int state;
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        state = sp.getInt("InitState", PREFERENCE_INIT);
-
-        //ログ表示
-//        output( String.valueOf(state) );
-        return state;
-    }
 
     public boolean onCreateOptionsMenu(Menu menu){
 
@@ -131,12 +81,17 @@ public class MainActivity extends ActionBarActivity {
                 // アラートダイアログのメッセージを設定します
                 alertDialogBuilderhei.setView(viewhei);
                 // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
+
+
+
+
+
                 alertDialogBuilderhei.setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                SharedPreferences data = getSharedPreferences("HeightSave", Context.MODE_PRIVATE);
+                                SharedPreferences data = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = data.edit();
                                 String he = heiEt.getEditableText().toString();
                                 editor.putInt("Height", Integer.parseInt(he));
@@ -170,7 +125,7 @@ public class MainActivity extends ActionBarActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                SharedPreferences data = getSharedPreferences("HeightSave", Context.MODE_PRIVATE);
+                                SharedPreferences data = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = data.edit();
                                 editor.putString("Name", nameEt.getEditableText().toString());
                                 editor.apply();

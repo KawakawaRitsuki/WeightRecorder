@@ -1,4 +1,4 @@
-package com.kawakawaplanning.wightrecorder.Fragment;
+package com.kawakawaplanning.weightrecorder.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,8 +10,8 @@ import android.widget.ListView;
 
 import com.activeandroid.query.Select;
 import com.baoyz.widget.PullRefreshLayout;
-import com.kawakawaplanning.wightrecorder.LifeItem;
-import com.kawakawaplanning.wightrecorder.R;
+import com.kawakawaplanning.weightrecorder.LifeItem;
+import com.kawakawaplanning.weightrecorder.R;
 
 import java.util.List;
 
@@ -52,17 +52,27 @@ public class LifeListFragment extends Fragment{
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
 
         for (LifeItem i : list) {
-            adapter.add(i.day + ":" + "日付/"+i.wight + ":体重" + i.fat + ":体脂肪" + i.bmi + ":bmi" );
+            adapter.add(i.day + ":" + "日付/"+i.weight + ":体重" + i.fat + ":体脂肪" + i.bmi + ":bmi" );
         }
 
         mListView.setAdapter(adapter);
 
-        mListView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                
-            }
-        });
+//        mListView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+        
+//        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                //ここに処理を書く
+//                LifeItem item = LifeItem.load(LifeItem.class, position);
+//                item.delete();
+//                return false;
+//            }
+//        });
 
         layout = (PullRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
 
@@ -75,9 +85,11 @@ public class LifeListFragment extends Fragment{
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1);
 
                 for (LifeItem i : list) {
-                    adapter.add(i.day + ":" + "日付/"+i.wight + ":体重" + i.fat + ":体脂肪" + i.bmi + ":bmi" );
+                    adapter.add(i.day + ":" + "日付/"+i.weight + ":体重" + i.fat + ":体脂肪" + i.bmi + ":bmi" );
                 }
-
+                if(adapter.isEmpty()){
+                    adapter.add("データがありません。記録画面から登録してください。");
+                }
                 mListView.setAdapter(adapter);
                 layout.setRefreshing(false);
             }

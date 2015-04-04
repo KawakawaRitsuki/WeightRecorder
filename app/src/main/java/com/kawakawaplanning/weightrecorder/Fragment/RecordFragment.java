@@ -1,4 +1,4 @@
-package com.kawakawaplanning.wightrecorder.Fragment;
+package com.kawakawaplanning.weightrecorder.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.kawakawaplanning.wightrecorder.LifeItem;
-import com.kawakawaplanning.wightrecorder.R;
+import com.kawakawaplanning.weightrecorder.LifeItem;
+import com.kawakawaplanning.weightrecorder.R;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -26,7 +26,7 @@ import java.util.Calendar;
 public class RecordFragment extends Fragment implements View.OnClickListener{
 
     private TextView mTextView1;
-    private EditText mWightET;
+    private EditText mweightET;
     private TextView mTextView3;
     private EditText mPressureupET;
     private TextView mTextView2;
@@ -38,7 +38,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
 
     private void assignViews(View v) {
         mTextView1 = (TextView) v.findViewById(R.id.textView1);
-        mWightET = (EditText) v.findViewById(R.id.wightET);
+        mweightET = (EditText) v.findViewById(R.id.weightET);
         mTextView3 = (TextView) v.findViewById(R.id.textView3);
         mPressureupET = (EditText) v.findViewById(R.id.pressureupET);
         mTextView2 = (TextView) v.findViewById(R.id.textView2);
@@ -81,8 +81,8 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
             case R.id.commitBtn:
 
                 Boolean flag = false;
-                if (mWightET.length() == 0){
-                    mWightET.setError("入力してください。");
+                if (mweightET.length() == 0){
+                    mweightET.setError("入力してください。");
                     flag = true;
                 }
                 if (mFatET.length() == 0){
@@ -109,7 +109,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
     }
 
     public void commit(){
-        int getWight = Integer.parseInt(mWightET.getEditableText().toString());
+        float getweight = Float.parseFloat(mweightET.getEditableText().toString());
         int getFat = Integer.parseInt(mFatET.getEditableText().toString());
         int getPuu = Integer.parseInt(mPressureupET.getEditableText().toString());
         int getPud = Integer.parseInt(mPressuredownET.getEditableText().toString());
@@ -119,12 +119,12 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
         LifeItem lifeItem = new LifeItem();
 
         lifeItem.day = sdf.format(c.getTime());
-        lifeItem.wight = getWight;
+        lifeItem.weight = getweight;
         lifeItem.fat = getFat;
         lifeItem.puu = getPuu;
         lifeItem.pud = getPud;
 
-        double bmi = bmi(Integer.parseInt(mWightET.getEditableText().toString()));
+        double bmi = bmi(Float.parseFloat(mweightET.getEditableText().toString()));
         lifeItem.bmi = bmi;
 
         lifeItem.save();
@@ -133,9 +133,9 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
 
 
 
-    public double bmi(int wight){
+    public double bmi(float weight){
 
-        SharedPreferences data = getActivity().getSharedPreferences("HeightSave", Context.MODE_PRIVATE);
+        SharedPreferences data = getActivity().getSharedPreferences("DataSave", Context.MODE_PRIVATE);
         double height = data.getInt("Height",-1 ) / 100F;
 
 
@@ -143,12 +143,12 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
 
         double hei = height * height;
 
-        double bmi = wight / hei;
+        double bmi = weight / hei;
 
         BigDecimal bd = new BigDecimal(bmi);
         BigDecimal bd3 = bd.setScale(1, BigDecimal.ROUND_DOWN);
 
-        Log.v("kp","height" + height + "wight" + wight + "bmi" + bmi);
+        Log.v("kp","height" + height + "weight" + weight + "bmi" + bmi);
 
         return bd3.doubleValue();
     }

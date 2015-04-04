@@ -1,4 +1,4 @@
-package com.kawakawaplanning.wightrecorder.Fragment;
+package com.kawakawaplanning.weightrecorder.Fragment;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,8 +15,8 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewStyle;
 import com.jjoe64.graphview.LineGraphView;
-import com.kawakawaplanning.wightrecorder.LifeItem;
-import com.kawakawaplanning.wightrecorder.R;
+import com.kawakawaplanning.weightrecorder.LifeItem;
+import com.kawakawaplanning.weightrecorder.R;
 
 import java.util.List;
 
@@ -55,34 +55,58 @@ public class GraphFragment extends Fragment{
             len ++;
         }
 
-        int[] weight = new int[len];
+        float[] weight = new float[len];
+        int[] fat = new int[len];
+        int[] puu = new int[len];
+        int[] pud = new int[len];
 
         for (LifeItem a : list) {
-            weight[s]= a.wight;
+            weight[s]= a.weight;
+            fat[s] = a.fat;
+            puu[s]= a.puu;
+            pud[s] = a.pud;
             s++;
         }
 
         s=0;
 
         int num = weight.length;
-        LineGraphView graphView = new LineGraphView(getActivity(), "sample");
+        LineGraphView graphView = new LineGraphView(getActivity(), "体重の推移");
 
-        GraphView.GraphViewData[] data = new GraphView.GraphViewData[num];
+        GraphView.GraphViewData[] weightGraph = new GraphView.GraphViewData[num];
+        GraphView.GraphViewData[] fatGraph = new GraphView.GraphViewData[num];
+        GraphView.GraphViewData[] puuGraph = new GraphView.GraphViewData[num];
+        GraphView.GraphViewData[] pudGraph = new GraphView.GraphViewData[num];
 
 //        Object[] weight = list.toArray();
 
         for (int i = 0; i < num; i++) {
-            data[i] = new GraphView.GraphViewData(i,weight[i]);
-            if(weight[i] <= 60){
-
-            }
+            weightGraph[i] = new GraphView.GraphViewData(i,weight[i]);
+            fatGraph[i] = new GraphView.GraphViewData(i,fat[i]);
+            puuGraph[i] = new GraphView.GraphViewData(i,puu[i]);
+            pudGraph[i] = new GraphView.GraphViewData(i,pud[i]);
+//            if(weight[i] <= 60){
+//            }
         }
 
         //　線の太さ
         int thickness = 5;
-        GraphViewSeries.GraphViewSeriesStyle style = new GraphViewSeries.GraphViewSeriesStyle(Color.BLUE, thickness);
-        GraphViewSeries series = new GraphViewSeries("体重の推移", style, data);
-        graphView.addSeries(series);
+
+        GraphViewSeries.GraphViewSeriesStyle styleWeight = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#52bbbb"), thickness);
+        GraphViewSeries.GraphViewSeriesStyle styleFat = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#1e4343"), thickness);
+        GraphViewSeries.GraphViewSeriesStyle stylepuu = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#cb2e2e"), thickness);
+        GraphViewSeries.GraphViewSeriesStyle stylepud = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#4e0606"), thickness);
+
+        GraphViewSeries seriesWeight = new GraphViewSeries("体重", styleWeight, weightGraph);
+        GraphViewSeries seriesFat = new GraphViewSeries("体脂肪", styleFat, fatGraph);
+        GraphViewSeries seriesPuu = new GraphViewSeries("最高血圧", stylepuu, puuGraph);
+        GraphViewSeries seriesPud = new GraphViewSeries("最低血圧", stylepud, pudGraph);
+
+        graphView.addSeries(seriesWeight);
+        graphView.addSeries(seriesFat);
+        graphView.addSeries(seriesPuu);
+        graphView.addSeries(seriesPud);
+
 
         // GraphViewStyleの取得
         GraphViewStyle graphViewStyle = graphView.getGraphViewStyle();
@@ -109,6 +133,20 @@ public class GraphFragment extends Fragment{
         // グラフを拡大したときにスクロールできるようにするか
         graphView.setScrollable(true);
 
+        // Legendを表示するかどうか
+        graphView.setShowLegend(true);
+// Legendを表示する幅
+        graphViewStyle.setLegendWidth(250);
+// 各項目のスペース
+        graphViewStyle.setLegendSpacing(10);
+// ボーダーの幅
+        graphViewStyle.setLegendBorder(10);
+// MarginBottom
+        graphViewStyle.setLegendMarginBottom(100);
+
+        graphView.setLegendAlign(GraphView.LegendAlign.BOTTOM);
+
+
         graph.addView(graphView);
 
 
@@ -117,12 +155,12 @@ public class GraphFragment extends Fragment{
 
 //        List<LifeItem> list = new Select().from(LifeItem.class).execute();
 //
-//        StringBuilder wightStr = new StringBuilder();
+//        StringBuilder weightStr = new StringBuilder();
 //        for (LifeItem i : list) {
-//            wightStr.append(i.wight+"/");
+//            weightStr.append(i.weight+"/");
 //        }
 //
-//        String[] sprit= wightStr.toString().split("/");
+//        String[] sprit= weightStr.toString().split("/");
 //
 //        int spLeng = sprit.length;
 //

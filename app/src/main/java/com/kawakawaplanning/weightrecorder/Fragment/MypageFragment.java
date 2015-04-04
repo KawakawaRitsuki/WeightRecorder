@@ -1,4 +1,4 @@
-package com.kawakawaplanning.wightrecorder.Fragment;
+package com.kawakawaplanning.weightrecorder.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,8 +14,8 @@ import com.activeandroid.query.Select;
 import com.baoyz.widget.PullRefreshLayout;
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieSlice;
-import com.kawakawaplanning.wightrecorder.LifeItem;
-import com.kawakawaplanning.wightrecorder.R;
+import com.kawakawaplanning.weightrecorder.LifeItem;
+import com.kawakawaplanning.weightrecorder.R;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class MypageFragment extends Fragment implements View.OnClickListener{
     TextView haiTv;
     TextView name1Tv;
     TextView name2Tv;
-    int latistWight;
+    float latistweight;
     int latistFat;
     PullRefreshLayout layout;
 
@@ -81,17 +81,17 @@ public class MypageFragment extends Fragment implements View.OnClickListener{
         List<LifeItem> list = new Select().from(LifeItem.class).execute();
 
         for (LifeItem i : list) {
-            latistWight = i.wight;
+            latistweight = i.weight;
             latistFat = i.fat;
         }
-        SharedPreferences data = getActivity().getSharedPreferences("HeightSave", Context.MODE_PRIVATE);
+        SharedPreferences data = getActivity().getSharedPreferences("DataSave", Context.MODE_PRIVATE);
         int height = data.getInt("Height",0 );
         String name = data.getString("Name","No name");
 
         name1Tv.setText(name);
         name2Tv.setText(name);
 
-        wigTv.setText(latistWight+ "kg");
+        wigTv.setText(latistweight+ "kg");
         fatTv.setText(latistFat+"%");
         haiTv.setText(height+"cm");
 

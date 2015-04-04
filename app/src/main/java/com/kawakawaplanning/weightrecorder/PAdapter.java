@@ -1,13 +1,13 @@
-package com.kawakawaplanning.wightrecorder;
+package com.kawakawaplanning.weightrecorder;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.kawakawaplanning.wightrecorder.Fragment.GraphFragment;
-import com.kawakawaplanning.wightrecorder.Fragment.LifeListFragment;
-import com.kawakawaplanning.wightrecorder.Fragment.MypageFragment;
-import com.kawakawaplanning.wightrecorder.Fragment.RecordFragment;
+import com.kawakawaplanning.weightrecorder.Fragment.GraphFragment;
+import com.kawakawaplanning.weightrecorder.Fragment.LifeListFragment;
+import com.kawakawaplanning.weightrecorder.Fragment.MypageFragment;
+import com.kawakawaplanning.weightrecorder.Fragment.RecordFragment;
 
 
 /**
