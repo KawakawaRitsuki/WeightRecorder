@@ -10,6 +10,7 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,28 +24,34 @@ public class MainActivity extends ActionBarActivity {
     public static final int PREFERENCE_BOOTED = 1;
     public EditText nameEt;
     public EditText heiEt;
+    static ViewPager vp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setState(PREFERENCE_BOOTED);
 
-
-        ViewPager vp = (ViewPager)findViewById(R.id.mypager);//定義
-
+        vp = (ViewPager)findViewById(R.id.mypager);//定義
         vp.setAdapter(new PAdapter(this.getSupportFragmentManager()));//アダプタ入れる
-
-        vp.setCurrentItem(1);
-
-
-
+        vp.setCurrentItem(2);
         PagerTabStrip pts = (PagerTabStrip)findViewById(R.id.pagertabstrip);
-
         pts.setDrawFullUnderline(true);
+
     }
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            if (vp.getCurrentItem() != 2){
+                vp.setCurrentItem(2);
+            }else finish();
 
+            return true;
+
+        }
+        return false;
+    }
 
     private void setState(int state) {
         // SharedPreferences設定を保存

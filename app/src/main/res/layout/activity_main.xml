@@ -1,8 +1,14 @@
-<android.support.v4.view.ViewPager
-    android:id="@+id/mypager"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mypager"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
 
     <android.support.v4.view.PagerTabStrip
         android:id="@+id/pagertabstrip"
@@ -14,4 +20,6 @@
         android:paddingBottom="4dp"
         android:textColor="#ffffff"/>
 
-</android.support.v4.view.ViewPager>
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

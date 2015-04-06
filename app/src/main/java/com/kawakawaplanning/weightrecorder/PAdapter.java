@@ -4,10 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.kawakawaplanning.weightrecorder.Fragment.GraphFragment;
 import com.kawakawaplanning.weightrecorder.Fragment.LifeListFragment;
 import com.kawakawaplanning.weightrecorder.Fragment.MypageFragment;
+import com.kawakawaplanning.weightrecorder.Fragment.PressGraphFragment;
 import com.kawakawaplanning.weightrecorder.Fragment.RecordFragment;
+import com.kawakawaplanning.weightrecorder.Fragment.WeightGraphFragment;
 
 
 /**
@@ -22,25 +23,27 @@ public class PAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch(position){
-            case 0:return new RecordFragment();
-            case 1:return new MypageFragment();
-            case 2:return new LifeListFragment();
-            case 3:return new GraphFragment();
+            case 0:return new LifeListFragment();
+            case 1:return new RecordFragment();
+            case 2:return new MypageFragment();
+            case 3:return new WeightGraphFragment();
+            case 4:return new PressGraphFragment();
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
     @Override
     public CharSequence getPageTitle(int position){
         switch(position){
-            case 0:return "記録";
-            case 1:return "マイページ";
-            case 2:return "リスト";
-            case 3:return "グラフ";
+            case 0:return "リスト";
+            case 1:return "記録";
+            case 2:return "マイページ";
+            case 3:return "体重グラフ";
+            case 4:return "血圧グラフ";
         }
         return null;
     }

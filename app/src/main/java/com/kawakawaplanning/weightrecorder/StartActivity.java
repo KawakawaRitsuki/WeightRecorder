@@ -63,7 +63,7 @@ public class StartActivity extends ActionBarActivity{
                 Intent intent=new Intent();
                 intent.setClassName("com.kawakawaplanning.weightrecorder","com.kawakawaplanning.weightrecorder.MainActivity");
                 startActivity(intent);
-
+                finish();
             }
         }
 
@@ -116,6 +116,7 @@ public class StartActivity extends ActionBarActivity{
                             intent.setClassName("com.kawakawaplanning.weightrecorder", "com.kawakawaplanning.weightrecorder.MainActivity");
 
                             startActivity(intent);
+                            finish();
                         }
                     }
                 }else if (1 == getState()){
@@ -126,6 +127,7 @@ public class StartActivity extends ActionBarActivity{
                         intent.setClassName("com.kawakawaplanning.weightrecorder","com.kawakawaplanning.weightrecorder.MainActivity");
 
                         startActivity(intent);
+                        finish();
                     }else{
                         mEditText2.setError("パスワードが違います。");
                     }
@@ -154,6 +156,7 @@ public class StartActivity extends ActionBarActivity{
                     intent.setClassName("com.kawakawaplanning.weightrecorder", "com.kawakawaplanning.weightrecorder.MainActivity");
 
                     startActivity(intent);
+                    finish();
                 }
                 break;
         }

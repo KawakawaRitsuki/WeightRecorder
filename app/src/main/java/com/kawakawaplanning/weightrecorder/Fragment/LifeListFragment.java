@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.baoyz.widget.PullRefreshLayout;
@@ -57,12 +59,12 @@ public class LifeListFragment extends Fragment{
 
         mListView.setAdapter(adapter);
 
-//        mListView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(), "どうしたものか。。。\n" + position + "つ目を選択しました。", Toast.LENGTH_SHORT).show();
+            }
+        });
         
 //        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 //            @Override

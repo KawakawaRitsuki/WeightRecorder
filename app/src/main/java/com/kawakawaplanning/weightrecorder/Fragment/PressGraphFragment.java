@@ -21,12 +21,12 @@ import com.kawakawaplanning.weightrecorder.R;
 import java.util.List;
 
 
-public class GraphFragment extends Fragment{
+public class PressGraphFragment extends Fragment{
 
     FrameLayout graph;
     int s = 0;
 
-    public GraphFragment() {
+    public PressGraphFragment() {
         // Required empty public constructor
     }
 
@@ -55,14 +55,10 @@ public class GraphFragment extends Fragment{
             len ++;
         }
 
-        float[] weight = new float[len];
-        int[] fat = new int[len];
         int[] puu = new int[len];
         int[] pud = new int[len];
 
         for (LifeItem a : list) {
-            weight[s]= a.weight;
-            fat[s] = a.fat;
             puu[s]= a.puu;
             pud[s] = a.pud;
             s++;
@@ -70,40 +66,26 @@ public class GraphFragment extends Fragment{
 
         s=0;
 
-        int num = weight.length;
-        LineGraphView graphView = new LineGraphView(getActivity(), "体重の推移");
+        int num = puu.length;
+        LineGraphView graphView = new LineGraphView(getActivity(), "血圧の推移");
 
-        GraphView.GraphViewData[] weightGraph = new GraphView.GraphViewData[num];
-        GraphView.GraphViewData[] fatGraph = new GraphView.GraphViewData[num];
         GraphView.GraphViewData[] puuGraph = new GraphView.GraphViewData[num];
         GraphView.GraphViewData[] pudGraph = new GraphView.GraphViewData[num];
 
-//        Object[] weight = list.toArray();
-
         for (int i = 0; i < num; i++) {
-            weightGraph[i] = new GraphView.GraphViewData(i,weight[i]);
-            fatGraph[i] = new GraphView.GraphViewData(i,fat[i]);
             puuGraph[i] = new GraphView.GraphViewData(i,puu[i]);
             pudGraph[i] = new GraphView.GraphViewData(i,pud[i]);
-//            if(weight[i] <= 60){
-//            }
         }
 
         //　線の太さ
-        int thickness = 5;
+        int thickness = 10;
 
-        GraphViewSeries.GraphViewSeriesStyle styleWeight = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#52bbbb"), thickness);
-        GraphViewSeries.GraphViewSeriesStyle styleFat = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#1e4343"), thickness);
-        GraphViewSeries.GraphViewSeriesStyle stylepuu = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#cb2e2e"), thickness);
-        GraphViewSeries.GraphViewSeriesStyle stylepud = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#4e0606"), thickness);
+        GraphViewSeries.GraphViewSeriesStyle stylepuu = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#df0f0f"), thickness);
+        GraphViewSeries.GraphViewSeriesStyle stylepud = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#041fbc"), thickness);
 
-        GraphViewSeries seriesWeight = new GraphViewSeries("体重", styleWeight, weightGraph);
-        GraphViewSeries seriesFat = new GraphViewSeries("体脂肪", styleFat, fatGraph);
         GraphViewSeries seriesPuu = new GraphViewSeries("最高血圧", stylepuu, puuGraph);
         GraphViewSeries seriesPud = new GraphViewSeries("最低血圧", stylepud, pudGraph);
 
-        graphView.addSeries(seriesWeight);
-        graphView.addSeries(seriesFat);
         graphView.addSeries(seriesPuu);
         graphView.addSeries(seriesPud);
 
