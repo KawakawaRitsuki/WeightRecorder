@@ -1,25 +1,37 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.example.test.MainActivity" >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/mypager"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/mypager"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1">
+
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/pagertabstrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="#154c58"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="#ffffff"/>
+
+        </android.support.v4.view.ViewPager>
+
+    </LinearLayout>
+
+    <include
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="1">
+        layout="@layout/include" />
 
-    <android.support.v4.view.PagerTabStrip
-        android:id="@+id/pagertabstrip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="#154c58"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:textColor="#ffffff"/>
-
-    </android.support.v4.view.ViewPager>
-
-</LinearLayout>
+</FrameLayout>

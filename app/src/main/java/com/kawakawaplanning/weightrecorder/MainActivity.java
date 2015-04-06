@@ -16,15 +16,56 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.activeandroid.query.Select;
+import com.jjoe64.graphview.GraphView;
+import com.kawakawaplanning.weightrecorder.Fragment.PressGraphFragment;
+
+import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener{
     public static final int PREFERENCE_INIT = 0;
     public static final int PREFERENCE_BOOTED = 1;
     public EditText nameEt;
     public EditText heiEt;
     static ViewPager vp;
+    LinearLayout[] ll = null;
+    ImageView iv_plus = null;
+    float scale = 0;
+    float scaled_px1 = 0;
+    float scaled_px2 = 0;
+    boolean menu_opened = false;// メニュータップフラグ
+    private static final long ANIMATION_TIMES = 200;//ミリ秒
+
+    private LinearLayout mItem1;
+    private ImageView mImgitem1;
+    private TextView mItem1Tv;
+    private LinearLayout mItem2;
+    private ImageView mImgitem2;
+    private TextView mItem2Tv;
+    private LinearLayout mItem3;
+    private ImageView mImgitem3;
+    private TextView mItem3Tv;
+    private LinearLayout mItem4;
+    private ImageView mImgitem4;
+    private TextView mItem4Tv;
+    private LinearLayout mItem5;
+    private ImageView mImgitem5;
+    private TextView mItem5Tv;
+    private LinearLayout mItem6;
+    private ImageView mImgitem6;
+    private TextView mItem6Tv;
+    private ImageView mPlusIc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +80,101 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    public void onResume() {
+        super.onResume();
+        findItemView();
+        get_scale();
+    }
 
+
+
+    private void assignViews() {
+
+    }
+
+    private void findItemView() {
+        mItem1 = (LinearLayout) findViewById(R.id.item1);
+        mImgitem1 = (ImageView) findViewById(R.id.imgitem1);
+        mItem1Tv = (TextView) findViewById(R.id.item1Tv);
+        mItem2 = (LinearLayout) findViewById(R.id.item2);
+        mImgitem2 = (ImageView) findViewById(R.id.imgitem2);
+        mItem2Tv = (TextView) findViewById(R.id.item2Tv);
+        mItem3 = (LinearLayout) findViewById(R.id.item3);
+        mImgitem3 = (ImageView) findViewById(R.id.imgitem3);
+        mItem3Tv = (TextView) findViewById(R.id.item3Tv);
+        mItem4 = (LinearLayout) findViewById(R.id.item4);
+        mImgitem4 = (ImageView) findViewById(R.id.imgitem4);
+        mItem4Tv = (TextView) findViewById(R.id.item4Tv);
+        mItem5 = (LinearLayout) findViewById(R.id.item5);
+        mImgitem5 = (ImageView) findViewById(R.id.imgitem5);
+        mItem5Tv = (TextView) findViewById(R.id.item5Tv);
+        mItem6 = (LinearLayout) findViewById(R.id.item6);
+        mImgitem6 = (ImageView) findViewById(R.id.imgitem6);
+        mItem6Tv = (TextView) findViewById(R.id.item6Tv);
+        mPlusIc = (ImageView) findViewById(R.id.plus_ic);
+        ll = new LinearLayout[6];
+        ll[0] = (LinearLayout) findViewById(R.id.item1);
+        ll[1] = (LinearLayout) findViewById(R.id.item2);
+        ll[2] = (LinearLayout) findViewById(R.id.item3);
+        ll[3] = (LinearLayout) findViewById(R.id.item4);
+        ll[4] = (LinearLayout) findViewById(R.id.item5);
+        ll[5] = (LinearLayout) findViewById(R.id.item6);
+        iv_plus = (ImageView) findViewById(R.id.plus_ic);
+
+        mImgitem1.setOnClickListener(this);
+        mImgitem2.setOnClickListener(this);
+        mImgitem3.setOnClickListener(this);
+        mImgitem4.setOnClickListener(this);
+        mImgitem5.setOnClickListener(this);
+        mImgitem6.setOnClickListener(this);
+    }
+
+    private void get_scale() {
+        scale = getResources().getDisplayMetrics().density;
+        scaled_px1 = -384 * scale;
+        scaled_px2 = 64 * scale;
+    }
+    public void plus_ic(View v) {
+        // フラグ管理
+
+
+        if (menu_opened == false) {
+            if(vp.getCurrentItem() == 1){
+                mItem6Tv.setText("記録(ここ)");
+            }else{
+                mItem6Tv.setText("記録");
+            }
+            menu_opened = true;
+            menu_open();
+        } else {
+
+            menu_opened = false;
+            menu_close();
+        }
+    }
+
+
+    private void menu_open() {
+        iv_plus.animate().setInterpolator(new OvershootInterpolator());
+        iv_plus.animate().setDuration(ANIMATION_TIMES);
+        iv_plus.animate().rotation(135).alpha(0.9f);
+        for (int i = 0, j = ll.length; i < j; i++) {
+            ll[i].animate().setInterpolator(new AccelerateDecelerateInterpolator());
+            ll[i].animate().setDuration(ANIMATION_TIMES);
+            ll[i].animate().x(0).y(scaled_px1 + (scaled_px2 * i)).alpha(0.9f);
+        }
+    }
+
+    private void menu_close() {
+        iv_plus.animate().setInterpolator(new OvershootInterpolator());
+        iv_plus.animate().setDuration(ANIMATION_TIMES - 100);
+        iv_plus.animate().rotation(0).alpha(0.9f);
+        for (int i = 0, j = ll.length; i < j; i++) {
+            ll[i].animate().setInterpolator(new LinearInterpolator());
+            ll[i].animate().setDuration(ANIMATION_TIMES-100);
+            ll[i].animate().x(0).y(0).alpha(0f);
+        }
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode==KeyEvent.KEYCODE_BACK){
@@ -62,7 +197,74 @@ public class MainActivity extends ActionBarActivity {
         // output( String.valueOf(state) );
     }
 
+    @Override
+    public void onClick(View v) {
 
+        switch (v.getId()) {
+            case R.id.imgitem1:
+                menu_close();
+                Toast.makeText(MainActivity.this, "Ktkr1", Toast.LENGTH_SHORT).show();
+                PressGraphFragment.drowGraph(getPUData(2),getPUData(2));
+                menu_opened = false;
+                break;
+            case R.id.imgitem2:
+                menu_close();
+                Toast.makeText(MainActivity.this, "Ktkr2", Toast.LENGTH_SHORT).show();
+                menu_opened = false;
+                break;
+            case R.id.imgitem3:
+                menu_close();
+                Toast.makeText(MainActivity.this, "Ktkr3", Toast.LENGTH_SHORT).show();
+                menu_opened = false;
+                break;
+            case R.id.imgitem4:
+                menu_close();
+                Toast.makeText(MainActivity.this, "Ktkr4", Toast.LENGTH_SHORT).show();
+                menu_opened = false;
+                break;
+            case R.id.imgitem5:
+                menu_close();
+                Toast.makeText(MainActivity.this, "Ktkr5", Toast.LENGTH_SHORT).show();
+                menu_opened = false;
+                break;
+            case R.id.imgitem6:
+                menu_close();
+                vp.setCurrentItem(1);
+                menu_opened = false;
+                break;
+
+        }
+    }
+    public GraphView.GraphViewData[] getPUData(int day){
+        int s = 0;
+        List<LifeItem> list = new Select().from(LifeItem.class).execute();
+
+        int len = 0;
+        for (LifeItem i : list) {
+            len++;
+        }
+        int[] puu = new int[len];
+        for (LifeItem a : list) {
+            puu[s] = a.puu;
+            s++;
+        }
+
+        s = 0;
+        int num = puu.length;
+        int minus = num - day;
+        GraphView.GraphViewData[] puuGraph;
+        if (num == 0){
+            puuGraph = new GraphView.GraphViewData[1];
+            puuGraph[0] = new GraphView.GraphViewData(0, 0);
+        }else {
+            puuGraph = new GraphView.GraphViewData[day];
+            for (int i = 0; i < day; i++) {
+                puuGraph[i] = new GraphView.GraphViewData(i, puu[minus]);
+                minus++;
+            }
+        }
+        return puuGraph;
+    }
     public boolean onCreateOptionsMenu(Menu menu){
 
         menu.add(0, 0, 0, "身長変更");

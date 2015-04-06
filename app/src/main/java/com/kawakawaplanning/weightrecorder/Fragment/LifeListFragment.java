@@ -56,7 +56,9 @@ public class LifeListFragment extends Fragment{
         for (LifeItem i : list) {
             adapter.add(i.day + ":" + "日付/"+i.weight + ":体重" + i.fat + ":体脂肪" + i.bmi + ":bmi" );
         }
-
+        if(adapter.isEmpty()){
+            adapter.add("データがありません。記録画面から登録してください。");
+        }
         mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
