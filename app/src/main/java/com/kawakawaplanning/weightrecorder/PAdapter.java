@@ -29,6 +29,7 @@ public class PAdapter extends FragmentPagerAdapter {
             case 3:return new WeightGraphFragment();
             case 4:return new PressGraphFragment();
         }
+
         return null;
     }
 

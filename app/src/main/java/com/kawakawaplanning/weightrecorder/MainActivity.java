@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerTabStrip;
@@ -38,34 +39,27 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public EditText nameEt;
     public EditText heiEt;
     static ViewPager vp;
-    LinearLayout[] ll = null;
-    ImageView iv_plus = null;
+    static LinearLayout[] ll = null;
+    static ImageView iv_plus = null;
     float scale = 0;
     float scaled_px1 = 0;
     float scaled_px2 = 0;
-    boolean menu_opened = false;// メニュータップフラグ
-    private static final long ANIMATION_TIMES = 200;//ミリ秒
+    static boolean menu_opened = false;// メニュータップフラグ
+    private static final long ANIMATION_TIMES = 100;//ミリ秒
 
-    private LinearLayout mItem1;
     private ImageView mImgitem1;
     private TextView mItem1Tv;
-    private LinearLayout mItem2;
     private ImageView mImgitem2;
     private TextView mItem2Tv;
-    private LinearLayout mItem3;
     private ImageView mImgitem3;
     private TextView mItem3Tv;
-    private LinearLayout mItem4;
     private ImageView mImgitem4;
     private TextView mItem4Tv;
-    private LinearLayout mItem5;
     private ImageView mImgitem5;
     private TextView mItem5Tv;
-    private LinearLayout mItem6;
     private ImageView mImgitem6;
     private TextView mItem6Tv;
-    private ImageView mPlusIc;
-
+    static LinearLayout rootLo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +71,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         vp.setCurrentItem(2);
         PagerTabStrip pts = (PagerTabStrip)findViewById(R.id.pagertabstrip);
         pts.setDrawFullUnderline(true);
+        vp.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (ViewPager.SCROLL_STATE_DRAGGING == state) {
+                    // スライド検知a
+                    onKieru();
+                }
+            }
+        });
+        findItemView();
 
     }
 
@@ -87,31 +91,21 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
 
-
-    private void assignViews() {
-
-    }
-
     private void findItemView() {
-        mItem1 = (LinearLayout) findViewById(R.id.item1);
         mImgitem1 = (ImageView) findViewById(R.id.imgitem1);
         mItem1Tv = (TextView) findViewById(R.id.item1Tv);
-        mItem2 = (LinearLayout) findViewById(R.id.item2);
         mImgitem2 = (ImageView) findViewById(R.id.imgitem2);
         mItem2Tv = (TextView) findViewById(R.id.item2Tv);
-        mItem3 = (LinearLayout) findViewById(R.id.item3);
         mImgitem3 = (ImageView) findViewById(R.id.imgitem3);
         mItem3Tv = (TextView) findViewById(R.id.item3Tv);
-        mItem4 = (LinearLayout) findViewById(R.id.item4);
         mImgitem4 = (ImageView) findViewById(R.id.imgitem4);
         mItem4Tv = (TextView) findViewById(R.id.item4Tv);
-        mItem5 = (LinearLayout) findViewById(R.id.item5);
         mImgitem5 = (ImageView) findViewById(R.id.imgitem5);
         mItem5Tv = (TextView) findViewById(R.id.item5Tv);
-        mItem6 = (LinearLayout) findViewById(R.id.item6);
         mImgitem6 = (ImageView) findViewById(R.id.imgitem6);
         mItem6Tv = (TextView) findViewById(R.id.item6Tv);
-        mPlusIc = (ImageView) findViewById(R.id.plus_ic);
+        rootLo = (LinearLayout) findViewById(R.id.rootLo);
+
         ll = new LinearLayout[6];
         ll[0] = (LinearLayout) findViewById(R.id.item1);
         ll[1] = (LinearLayout) findViewById(R.id.item2);
@@ -137,12 +131,48 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void plus_ic(View v) {
         // フラグ管理
 
+        rootLo.setBackgroundColor(Color.parseColor("#880c1b1b"));
 
         if (menu_opened == false) {
-            if(vp.getCurrentItem() == 1){
-                mItem6Tv.setText("記録(ここ)");
-            }else{
-                mItem6Tv.setText("記録");
+            ll[0].setVisibility(View.VISIBLE);
+            ll[1].setVisibility(View.VISIBLE);
+            ll[2].setVisibility(View.VISIBLE);
+            ll[3].setVisibility(View.VISIBLE);
+            ll[4].setVisibility(View.VISIBLE);
+            ll[5].setVisibility(View.VISIBLE);
+            switch (vp.getCurrentItem()){
+
+                case 0://リストページなら
+                    mItem1Tv.setText("Item1");mItem2Tv.setText("全期間表示");mItem3Tv.setText("期間指定");
+                    mItem4Tv.setText("１年分表示");mItem5Tv.setText("１ヶ月分表示");mItem6Tv.setText("１週間分表示");
+                    ll[0].setVisibility(View.INVISIBLE);
+                    break;
+                case 1://記録ページなら
+                    mItem1Tv.setText("Item1");mItem2Tv.setText("Item2");mItem3Tv.setText("Item3");
+                    mItem4Tv.setText("Item4");mItem5Tv.setText("名前変更");mItem6Tv.setText("身長変更");
+                    ll[0].setVisibility(View.INVISIBLE);
+                    ll[1].setVisibility(View.INVISIBLE);
+                    ll[2].setVisibility(View.INVISIBLE);
+                    ll[3].setVisibility(View.INVISIBLE);
+                    break;
+                case 2://マイページなら
+                    mItem1Tv.setText("Item1");mItem2Tv.setText("Item2");mItem3Tv.setText("Item3");
+                    mItem4Tv.setText("Item4");mItem5Tv.setText("オープンソースライセンス");mItem6Tv.setText("このアプリについて");
+                    ll[0].setVisibility(View.INVISIBLE);
+                    ll[1].setVisibility(View.INVISIBLE);
+                    ll[2].setVisibility(View.INVISIBLE);
+                    ll[3].setVisibility(View.INVISIBLE);
+                    break;
+                case 3://体重グラフなら
+                    mItem1Tv.setText("Item1");mItem2Tv.setText("全期間表示");mItem3Tv.setText("期間指定");
+                    mItem4Tv.setText("１年分表示");mItem5Tv.setText("１ヶ月分表示");mItem6Tv.setText("１週間分表示");
+                    ll[0].setVisibility(View.INVISIBLE);
+                    break;
+                case 4://血圧グラフなら
+                    mItem1Tv.setText("Item1");mItem2Tv.setText("全期間表示");mItem3Tv.setText("期間指定");
+                    mItem4Tv.setText("１年分表示");mItem5Tv.setText("１ヶ月分表示");mItem6Tv.setText("１週間分表示");
+                    ll[0].setVisibility(View.INVISIBLE);
+                    break;
             }
             menu_opened = true;
             menu_open();
@@ -165,15 +195,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
     }
 
-    private void menu_close() {
+    private static void menu_close() {
         iv_plus.animate().setInterpolator(new OvershootInterpolator());
-        iv_plus.animate().setDuration(ANIMATION_TIMES - 100);
+        iv_plus.animate().setDuration(ANIMATION_TIMES);
         iv_plus.animate().rotation(0).alpha(0.9f);
         for (int i = 0, j = ll.length; i < j; i++) {
             ll[i].animate().setInterpolator(new LinearInterpolator());
-            ll[i].animate().setDuration(ANIMATION_TIMES-100);
+            ll[i].animate().setDuration(ANIMATION_TIMES);
             ll[i].animate().x(0).y(0).alpha(0f);
         }
+        rootLo.setBackgroundColor(Color.parseColor("#00000000"));
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -204,7 +235,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             case R.id.imgitem1:
                 menu_close();
                 Toast.makeText(MainActivity.this, "Ktkr1", Toast.LENGTH_SHORT).show();
-                PressGraphFragment.drowGraph(getPUData(2),getPUData(2));
+                PressGraphFragment.drowGraph(getPUData( 3),getPDData(3));
                 menu_opened = false;
                 break;
             case R.id.imgitem2:
@@ -235,6 +266,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         }
     }
+
+    public static void onKieru(){
+        menu_close();
+        menu_opened = false;
+    }
+
     public GraphView.GraphViewData[] getPUData(int day){
         int s = 0;
         List<LifeItem> list = new Select().from(LifeItem.class).execute();
@@ -265,6 +302,37 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
         return puuGraph;
     }
+    public GraphView.GraphViewData[] getPDData(int day){
+        int s = 0;
+        List<LifeItem> list = new Select().from(LifeItem.class).execute();
+
+        int len = 0;
+        for (LifeItem i : list) {
+            len++;
+        }
+        int[] pud = new int[len];
+        for (LifeItem a : list) {
+            pud[s] = a.pud;
+            s++;
+        }
+
+        s = 0;
+        int num = pud.length;
+        int minus = num - day;
+        GraphView.GraphViewData[] pudGraph;
+        if (num == 0){
+            pudGraph = new GraphView.GraphViewData[1];
+            pudGraph[0] = new GraphView.GraphViewData(0, 0);
+        }else {
+            pudGraph = new GraphView.GraphViewData[day];
+            for (int i = 0; i < day; i++) {
+                pudGraph[i] = new GraphView.GraphViewData(i, pud[minus]);
+                minus++;
+            }
+        }
+        return pudGraph;
+    }
+    
     public boolean onCreateOptionsMenu(Menu menu){
 
         menu.add(0, 0, 0, "身長変更");
@@ -285,16 +353,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
                 heiEt = (EditText)viewhei.findViewById(R.id.editText);
 
-                // アラートダイアログのタイトルを設定します
                 alertDialogBuilderhei.setTitle("身長設定");
-                // アラートダイアログのメッセージを設定します
                 alertDialogBuilderhei.setView(viewhei);
-                // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
-
-
-
-
-
                 alertDialogBuilderhei.setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -310,7 +370,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         });
                 alertDialogBuilderhei.setCancelable(true);
                 AlertDialog alertDialoghei = alertDialogBuilderhei.create();
-                // アラートダイアログを表示します
                 alertDialoghei.show();
                 return true;
 
@@ -323,12 +382,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         (ViewGroup)findViewById(R.id.dialogname_layout));
 
                 nameEt = (EditText)viewname.findViewById(R.id.editText);
-
-                // アラートダイアログのタイトルを設定します
                 alertDialogBuildername.setTitle("名前設定");
-                // アラートダイアログのメッセージを設定します
                 alertDialogBuildername.setView(viewname);
-                // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
                 alertDialogBuildername.setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -343,7 +398,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         });
                 alertDialogBuildername.setCancelable(true);
                 AlertDialog alertDialogname = alertDialogBuildername.create();
-                // アラートダイアログを表示します
                 alertDialogname.show();
                 return true;
 
@@ -353,11 +407,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         LAYOUT_INFLATER_SERVICE);
                 View view =  inflater.inflate(R.layout.opensourcelicense,
                         (ViewGroup)findViewById(R.id.rootLayout));
-                // アラートダイアログのタイトルを設定します
                 alertDialogBuilder.setTitle("オープンソースライセンス");
-                // アラートダイアログのメッセージを設定します
                 alertDialogBuilder.setView(view);
-                // アラートダイアログの肯定ボタンがクリックされた時に呼び出されるコールバックリスナーを登録します
                 alertDialogBuilder.setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -366,7 +417,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         });
                 alertDialogBuilder.setCancelable(true);
                 AlertDialog alertDialog = alertDialogBuilder.create();
-                // アラートダイアログを表示します
                 alertDialog.show();
                 return true;
 

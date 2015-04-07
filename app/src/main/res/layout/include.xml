@@ -1,311 +1,328 @@
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
 android:layout_height="match_parent"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:orientation="vertical"
+    android:id="@+id/rootLo">
 
-    <LinearLayout
-        android:id="@+id/item1"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/ic_mini"
-                android:id="@+id/imgitem1"
-                android:layout_gravity="right|bottom"
-                android:layout_margin="20dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="true" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignTop="@+id/imgitem1"
-                android:layout_toLeftOf="@+id/imgitem1"
-                android:layout_toStartOf="@+id/imgitem1"
-                android:layout_alignBottom="@+id/imgitem1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Item1"
-                    android:id="@+id/item1Tv"
-                    android:layout_alignWithParentIfMissing="false"
-                    android:layout_alignBottom="@+id/imgitem1"
-                    android:layout_toLeftOf="@+id/imgitem1"
-                    android:layout_toStartOf="@+id/imgitem1"
-                    android:gravity="center"
-                    android:layout_gravity="right" />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/item2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0"
-        android:orientation="horizontal"
-        android:focusableInTouchMode="false">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/ic_mini"
-                android:id="@+id/imgitem2"
-                android:layout_gravity="right|bottom"
-                android:layout_margin="20dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="true" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignTop="@+id/imgitem2"
-                android:layout_toLeftOf="@+id/imgitem2"
-                android:layout_toStartOf="@+id/imgitem2"
-                android:layout_alignBottom="@+id/imgitem2">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Item2"
-                    android:id="@+id/item2Tv"
-                    android:layout_alignWithParentIfMissing="false"
-                    android:layout_alignBottom="@+id/imgitem2"
-                    android:layout_toLeftOf="@+id/imgitem2"
-                    android:layout_toStartOf="@+id/imgitem2"
-                    android:gravity="center"
-                    android:layout_gravity="right" />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/item3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/ic_mini"
-                android:id="@+id/imgitem3"
-                android:layout_gravity="right|bottom"
-                android:layout_margin="20dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="true" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignTop="@+id/imgitem3"
-                android:layout_toLeftOf="@+id/imgitem3"
-                android:layout_toStartOf="@+id/imgitem3"
-                android:layout_alignBottom="@+id/imgitem3">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Item3"
-                    android:id="@+id/item3Tv"
-                    android:layout_alignWithParentIfMissing="false"
-                    android:layout_alignBottom="@+id/imgitem3"
-                    android:layout_toLeftOf="@+id/imgitem3"
-                    android:layout_toStartOf="@+id/imgitem3"
-                    android:gravity="center"
-                    android:layout_gravity="right" />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/item4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/ic_mini"
-                android:id="@+id/imgitem4"
-                android:layout_gravity="right|bottom"
-                android:layout_margin="20dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="true" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignTop="@+id/imgitem4"
-                android:layout_toLeftOf="@+id/imgitem4"
-                android:layout_toStartOf="@+id/imgitem4"
-                android:layout_alignBottom="@+id/imgitem4">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Item4"
-                    android:id="@+id/item4Tv"
-                    android:layout_alignWithParentIfMissing="false"
-                    android:layout_alignBottom="@+id/imgitem4"
-                    android:layout_toLeftOf="@+id/imgitem4"
-                    android:layout_toStartOf="@+id/imgitem4"
-                    android:gravity="center"
-                    android:layout_gravity="right" />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/item5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/ic_mini"
-                android:id="@+id/imgitem5"
-                android:layout_gravity="right|bottom"
-                android:layout_margin="20dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="true" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignTop="@+id/imgitem5"
-                android:layout_toLeftOf="@+id/imgitem5"
-                android:layout_toStartOf="@+id/imgitem5"
-                android:layout_alignBottom="@+id/imgitem5">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Item5"
-                    android:id="@+id/item5Tv"
-                    android:layout_alignWithParentIfMissing="false"
-                    android:layout_alignBottom="@+id/imgitem5"
-                    android:layout_toLeftOf="@+id/imgitem5"
-                    android:layout_toStartOf="@+id/imgitem5"
-                    android:gravity="center"
-                    android:layout_gravity="right" />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-
-<LinearLayout
-    android:id="@+id/item6"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:alpha="0"
-    android:orientation="horizontal">
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-        <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/ic_mini"
-            android:id="@+id/imgitem6"
-            android:layout_gravity="right|bottom"
-            android:layout_margin="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentRight="true" />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignTop="@+id/imgitem6"
-            android:layout_toLeftOf="@+id/imgitem6"
-            android:layout_toStartOf="@+id/imgitem6"
-            android:layout_alignBottom="@+id/imgitem6">
+            android:id="@+id/item1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="記録"
-                android:id="@+id/item6Tv"
-                android:layout_alignWithParentIfMissing="false"
-                android:layout_alignBottom="@+id/imgitem6"
-                android:layout_toLeftOf="@+id/imgitem6"
-                android:layout_toStartOf="@+id/imgitem6"
-                android:gravity="center"
-                android:layout_gravity="right" />
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_mini"
+                    android:id="@+id/imgitem1"
+                    android:layout_gravity="right|bottom"
+                    android:layout_margin="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="true" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignTop="@+id/imgitem1"
+                    android:layout_toLeftOf="@+id/imgitem1"
+                    android:layout_toStartOf="@+id/imgitem1"
+                    android:layout_alignBottom="@+id/imgitem1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Item1"
+                        android:id="@+id/item1Tv"
+                        android:layout_alignWithParentIfMissing="false"
+                        android:layout_alignBottom="@+id/imgitem1"
+                        android:layout_toLeftOf="@+id/imgitem1"
+                        android:layout_toStartOf="@+id/imgitem1"
+                        android:gravity="center"
+                        android:layout_gravity="right"
+                        android:textColor="#ffffffff" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
         </LinearLayout>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/item2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:orientation="horizontal"
+            android:focusableInTouchMode="false">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_mini"
+                    android:id="@+id/imgitem2"
+                    android:layout_gravity="right|bottom"
+                    android:layout_margin="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="true" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignTop="@+id/imgitem2"
+                    android:layout_toLeftOf="@+id/imgitem2"
+                    android:layout_toStartOf="@+id/imgitem2"
+                    android:layout_alignBottom="@+id/imgitem2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Item2"
+                        android:id="@+id/item2Tv"
+                        android:layout_alignWithParentIfMissing="false"
+                        android:layout_alignBottom="@+id/imgitem2"
+                        android:layout_toLeftOf="@+id/imgitem2"
+                        android:layout_toStartOf="@+id/imgitem2"
+                        android:gravity="center"
+                        android:layout_gravity="right"
+                        android:textColor="#ffffffff" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_mini"
+                    android:id="@+id/imgitem3"
+                    android:layout_gravity="right|bottom"
+                    android:layout_margin="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="true" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignTop="@+id/imgitem3"
+                    android:layout_toLeftOf="@+id/imgitem3"
+                    android:layout_toStartOf="@+id/imgitem3"
+                    android:layout_alignBottom="@+id/imgitem3">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Item3"
+                        android:id="@+id/item3Tv"
+                        android:layout_alignWithParentIfMissing="false"
+                        android:layout_alignBottom="@+id/imgitem3"
+                        android:layout_toLeftOf="@+id/imgitem3"
+                        android:layout_toStartOf="@+id/imgitem3"
+                        android:gravity="center"
+                        android:layout_gravity="right"
+                        android:textColor="#ffffffff"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_mini"
+                    android:id="@+id/imgitem4"
+                    android:layout_gravity="right|bottom"
+                    android:layout_margin="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="true" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignTop="@+id/imgitem4"
+                    android:layout_toLeftOf="@+id/imgitem4"
+                    android:layout_toStartOf="@+id/imgitem4"
+                    android:layout_alignBottom="@+id/imgitem4">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Item4"
+                        android:id="@+id/item4Tv"
+                        android:layout_alignWithParentIfMissing="false"
+                        android:layout_alignBottom="@+id/imgitem4"
+                        android:layout_toLeftOf="@+id/imgitem4"
+                        android:layout_toStartOf="@+id/imgitem4"
+                        android:gravity="center"
+                        android:layout_gravity="right"
+                        android:textColor="#ffffffff"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_mini"
+                    android:id="@+id/imgitem5"
+                    android:layout_gravity="right|bottom"
+                    android:layout_margin="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="true" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignTop="@+id/imgitem5"
+                    android:layout_toLeftOf="@+id/imgitem5"
+                    android:layout_toStartOf="@+id/imgitem5"
+                    android:layout_alignBottom="@+id/imgitem5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Item5"
+                        android:id="@+id/item5Tv"
+                        android:layout_alignWithParentIfMissing="false"
+                        android:layout_alignBottom="@+id/imgitem5"
+                        android:layout_toLeftOf="@+id/imgitem5"
+                        android:layout_toStartOf="@+id/imgitem5"
+                        android:gravity="center"
+                        android:layout_gravity="right"
+                        android:textColor="#ffffffff"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+        android:id="@+id/item6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/Rlayout">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_mini"
+                android:id="@+id/imgitem6"
+                android:layout_gravity="right|bottom"
+                android:layout_margin="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentRight="true" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignTop="@+id/imgitem6"
+                android:layout_toLeftOf="@+id/imgitem6"
+                android:layout_toStartOf="@+id/imgitem6"
+                android:layout_alignBottom="@+id/imgitem6">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="記録"
+                    android:id="@+id/item6Tv"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_alignBottom="@+id/imgitem6"
+                    android:layout_toLeftOf="@+id/imgitem6"
+                    android:layout_toStartOf="@+id/imgitem6"
+                    android:gravity="center"
+                    android:layout_gravity="right"
+                    android:textColor="#ffffffff"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+        <ImageView
+        android:id="@+id/plus_ic"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:alpha="0.9"
+        android:onClick="plus_ic"
+        android:src="@drawable/ic_plus"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="20dp" />
+    </FrameLayout>
+
 
 </LinearLayout>
-
-    <ImageView
-    android:id="@+id/plus_ic"
-    android:layout_width="64dp"
-    android:layout_height="64dp"
-    android:alpha="0.9"
-    android:onClick="plus_ic"
-    android:src="@drawable/ic_plus"
-    android:layout_gravity="bottom|right"
-    android:layout_margin="20dp" />
-
-</FrameLayout>
