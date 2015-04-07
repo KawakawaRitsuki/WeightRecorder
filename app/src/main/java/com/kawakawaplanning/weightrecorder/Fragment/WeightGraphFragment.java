@@ -1,5 +1,6 @@
 package com.kawakawaplanning.weightrecorder.Fragment;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -23,8 +24,9 @@ import java.util.List;
 
 public class WeightGraphFragment extends Fragment{
 
-    FrameLayout graph;
+    public static FrameLayout graph;
     int s = 0;
+    public static Activity activity;
 
     public WeightGraphFragment() {
         // Required empty public constructor
@@ -36,6 +38,7 @@ public class WeightGraphFragment extends Fragment{
 
         View v = inflater.inflate(R.layout.fragment_graph, container, false);
         graph = (FrameLayout)v.findViewById(R.id.graph);
+        activity = (Activity)v.getContext();
         return v;
     }
 
@@ -91,8 +94,9 @@ public class WeightGraphFragment extends Fragment{
 
 
     }
-    public void drowGraph(GraphView.GraphViewData[] weightGraph,GraphView.GraphViewData[] fatGraph)
-        {LineGraphView graphView = new LineGraphView(getActivity(), "体重の推移");
+    public static void drowGraph(GraphView.GraphViewData[] weightGraph,GraphView.GraphViewData[] fatGraph){
+            graph.removeAllViews();
+            LineGraphView graphView = new LineGraphView(activity, "体重の推移");
         int thickness = 10;//　線の太さ
 
         GraphViewSeries.GraphViewSeriesStyle styleWeight = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#52bbbb"), thickness);

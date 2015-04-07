@@ -13,8 +13,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -23,14 +21,20 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.jjoe64.graphview.GraphView;
+import com.kawakawaplanning.weightrecorder.Fragment.LifeListFragment;
 import com.kawakawaplanning.weightrecorder.Fragment.PressGraphFragment;
+import com.kawakawaplanning.weightrecorder.Fragment.WeightGraphFragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
@@ -60,6 +64,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private ImageView mImgitem6;
     private TextView mItem6Tv;
     static LinearLayout rootLo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,27 +245,232 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 break;
             case R.id.imgitem2:
                 menu_close();
-                Toast.makeText(MainActivity.this, "Ktkr2", Toast.LENGTH_SHORT).show();
+                switch (vp.getCurrentItem()){
+                    case 0://1ページ目の時
+                        listshow(100000000);
+                        break;
+                    case 1://2ページ目の時
+
+                        break;
+                    case 2://3ページ目の時
+
+                        break;
+                    case 3://4ページ目の時
+                        WeightGraphFragment.drowGraph(getWTData(100000000), getFATData(100000000));
+                        break;
+                    case 4://5ページ目の時
+                        PressGraphFragment.drowGraph(getPUData(100000000),getPDData(100000000));
+                        break;
+                }
                 menu_opened = false;
                 break;
             case R.id.imgitem3:
                 menu_close();
-                Toast.makeText(MainActivity.this, "Ktkr3", Toast.LENGTH_SHORT).show();
+                switch (vp.getCurrentItem()){
+                    case 0://1ページ目の時
+                        AlertDialog.Builder alertDialogBuildername = new AlertDialog.Builder(this);
+                        LayoutInflater inflatername = (LayoutInflater)this.getSystemService(
+                                LAYOUT_INFLATER_SERVICE);
+                        View viewname =  inflatername.inflate(R.layout.dialogday,
+                                (ViewGroup)findViewById(R.id.dialogname_layout));
+
+                        nameEt = (EditText)viewname.findViewById(R.id.editText);
+                        alertDialogBuildername.setTitle("日数指定");
+                        alertDialogBuildername.setView(viewname);
+                        alertDialogBuildername.setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        
+                                        String name = nameEt.getEditableText().toString();
+                                        listshow(Integer.parseInt(name));
+                                    }
+                                });
+                        alertDialogBuildername.setCancelable(true);
+                        AlertDialog alertDialogname = alertDialogBuildername.create();
+                        alertDialogname.show();
+                        
+                        break;
+                    case 1://2ページ目の時
+
+                        break;
+                    case 2://3ページ目の時
+
+                        break;
+                    case 3://4ページ目の時
+                        AlertDialog.Builder alertDialogBuilderday = new AlertDialog.Builder(this);
+                        LayoutInflater inflaterday = (LayoutInflater)this.getSystemService(
+                                LAYOUT_INFLATER_SERVICE);
+                        View viewday =  inflaterday.inflate(R.layout.dialogday,
+                                (ViewGroup)findViewById(R.id.dialogname_layout));
+
+                        nameEt = (EditText)viewday.findViewById(R.id.editText);
+                        alertDialogBuilderday.setTitle("日数指定");
+                        alertDialogBuilderday.setView(viewday);
+                        alertDialogBuilderday.setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String day = nameEt.getEditableText().toString();
+                                        WeightGraphFragment.drowGraph(getWTData(Integer.parseInt(day)), getFATData(Integer.parseInt(day)));
+                                    }
+                                });
+                        alertDialogBuilderday.setCancelable(true);
+                        AlertDialog alertDialogday = alertDialogBuilderday.create();
+                        alertDialogday.show();
+                        break;
+                    case 4://5ページ目の時
+                        AlertDialog.Builder alertDialogBuilderday1 = new AlertDialog.Builder(this);
+                        LayoutInflater inflaterday1 = (LayoutInflater)this.getSystemService(
+                                LAYOUT_INFLATER_SERVICE);
+                        View viewday1 =  inflaterday1.inflate(R.layout.dialogday,
+                                (ViewGroup)findViewById(R.id.dialogname_layout));
+
+                        nameEt = (EditText)viewday1.findViewById(R.id.editText);
+                        alertDialogBuilderday1.setTitle("日数指定");
+                        alertDialogBuilderday1.setView(viewday1);
+                        alertDialogBuilderday1.setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        String day = nameEt.getEditableText().toString();
+                                        PressGraphFragment.drowGraph(getPUData(Integer.parseInt(day)), getPDData(Integer.parseInt(day)));
+
+                                    }
+                                });
+                        alertDialogBuilderday1.setCancelable(true);
+                        AlertDialog alertDialogday1 = alertDialogBuilderday1.create();
+                        alertDialogday1.show();
+                        break;
+                }
                 menu_opened = false;
+
                 break;
             case R.id.imgitem4:
                 menu_close();
-                Toast.makeText(MainActivity.this, "Ktkr4", Toast.LENGTH_SHORT).show();
+                switch (vp.getCurrentItem()){
+                    case 0://1ページ目の時
+                        listshow(365);
+                        break;
+                    case 1://2ページ目の時
+
+                        break;
+                    case 2://3ページ目の時
+
+                        break;
+                    case 3://4ページ目の時
+                        WeightGraphFragment.drowGraph(getWTData(365), getFATData(365));
+                        break;
+                    case 4://5ページ目の時
+                        PressGraphFragment.drowGraph(getPUData(365),getPDData(365));
+                        break;
+                }
                 menu_opened = false;
                 break;
             case R.id.imgitem5:
                 menu_close();
-                Toast.makeText(MainActivity.this, "Ktkr5", Toast.LENGTH_SHORT).show();
+                switch (vp.getCurrentItem()){
+                    case 0://1ページ目の時
+                        listshow(30);
+                        break;
+                    case 1://2ページ目の時
+                        AlertDialog.Builder alertDialogBuildername = new AlertDialog.Builder(this);
+                        LayoutInflater inflatername = (LayoutInflater)this.getSystemService(
+                                LAYOUT_INFLATER_SERVICE);
+                        View viewname =  inflatername.inflate(R.layout.dialogname,
+                                (ViewGroup)findViewById(R.id.dialogname_layout));
+
+                        nameEt = (EditText)viewname.findViewById(R.id.editText);
+                        alertDialogBuildername.setTitle("名前設定");
+                        alertDialogBuildername.setView(viewname);
+                        alertDialogBuildername.setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        SharedPreferences data = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = data.edit();
+                                        editor.putString("Name", nameEt.getEditableText().toString());
+                                        editor.apply();
+
+                                    }
+                                });
+                        alertDialogBuildername.setCancelable(true);
+                        AlertDialog alertDialogname = alertDialogBuildername.create();
+                        alertDialogname.show();
+                        break;
+                    case 2://3ページ目の時
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                LayoutInflater inflater = (LayoutInflater)this.getSystemService(
+                        LAYOUT_INFLATER_SERVICE);
+                View view =  inflater.inflate(R.layout.opensourcelicense,
+                        (ViewGroup)findViewById(R.id.rootLayout));
+                alertDialogBuilder.setTitle("オープンソースライセンス");
+                alertDialogBuilder.setView(view);
+                alertDialogBuilder.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                alertDialogBuilder.setCancelable(true);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                        break;
+                    case 3://4ページ目の時
+                        WeightGraphFragment.drowGraph(getWTData(30), getFATData(30));
+                        break;
+                    case 4://5ページ目の時
+                        PressGraphFragment.drowGraph(getPUData(30),getPDData(30));
+                        break;
+                }
                 menu_opened = false;
                 break;
             case R.id.imgitem6:
                 menu_close();
-                vp.setCurrentItem(1);
+                switch (vp.getCurrentItem()){
+                    case 0://1ページ目の時
+                        listshow(7);
+                        break;
+                    case 1://2ページ目の時
+                        AlertDialog.Builder alertDialogBuilderhei = new AlertDialog.Builder(this);
+                LayoutInflater inflaterhei = (LayoutInflater)this.getSystemService(
+                        LAYOUT_INFLATER_SERVICE);
+                View viewhei =  inflaterhei.inflate(R.layout.dialoghei,
+                        (ViewGroup)findViewById(R.id.dialoghei_layout));
+
+                heiEt = (EditText)viewhei.findViewById(R.id.editText);
+
+                alertDialogBuilderhei.setTitle("身長設定");
+                alertDialogBuilderhei.setView(viewhei);
+                alertDialogBuilderhei.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                SharedPreferences data = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = data.edit();
+                                String he = heiEt.getEditableText().toString();
+                                editor.putInt("Height", Integer.parseInt(he));
+                                editor.apply();
+
+                            }
+                        });
+                alertDialogBuilderhei.setCancelable(true);
+                AlertDialog alertDialoghei = alertDialogBuilderhei.create();
+                alertDialoghei.show();
+                        break;
+                    case 2://3ページ目の時
+
+                        break;
+                    case 3://4ページ目の時
+                        WeightGraphFragment.drowGraph(getWTData(7), getFATData(7));
+                        break;
+                    case 4://5ページ目の時
+                        PressGraphFragment.drowGraph(getPUData(7),getPDData(7));
+                        break;
+                }
                 menu_opened = false;
                 break;
 
@@ -287,8 +497,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
 
         s = 0;
+
         int num = puu.length;
-        int minus = num - day;
+
+        int minus = 0;
+        if(day > num){
+            minus = 0;
+            day = num;
+        }else if (day < num){
+            minus = num - day;
+        }
+
         GraphView.GraphViewData[] puuGraph;
         if (num == 0){
             puuGraph = new GraphView.GraphViewData[1];
@@ -303,6 +522,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return puuGraph;
     }
     public GraphView.GraphViewData[] getPDData(int day){
+
         int s = 0;
         List<LifeItem> list = new Select().from(LifeItem.class).execute();
 
@@ -318,7 +538,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         s = 0;
         int num = pud.length;
-        int minus = num - day;
+        int minus = 0;
+        if(day > num){
+            minus = 0;
+            day = num;
+        }else if (day < num){
+            minus = num - day;
+        }
         GraphView.GraphViewData[] pudGraph;
         if (num == 0){
             pudGraph = new GraphView.GraphViewData[1];
@@ -332,96 +558,133 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
         return pudGraph;
     }
-    
-    public boolean onCreateOptionsMenu(Menu menu){
+    public GraphView.GraphViewData[] getWTData(int day){
+        int s = 0;
+        List<LifeItem> list = new Select().from(LifeItem.class).execute();
 
-        menu.add(0, 0, 0, "身長変更");
-        menu.add(0, 1, 0, "名前変更");
-        menu.add(0, 2, 0, "オープンソースライセンス");
-
-        return true;
-    }
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 0:
-                Log.d("Menu", "Select Menu A");
-                AlertDialog.Builder alertDialogBuilderhei = new AlertDialog.Builder(this);
-                LayoutInflater inflaterhei = (LayoutInflater)this.getSystemService(
-                        LAYOUT_INFLATER_SERVICE);
-                View viewhei =  inflaterhei.inflate(R.layout.dialoghei,
-                        (ViewGroup)findViewById(R.id.dialoghei_layout));
-
-                heiEt = (EditText)viewhei.findViewById(R.id.editText);
-
-                alertDialogBuilderhei.setTitle("身長設定");
-                alertDialogBuilderhei.setView(viewhei);
-                alertDialogBuilderhei.setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                SharedPreferences data = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = data.edit();
-                                String he = heiEt.getEditableText().toString();
-                                editor.putInt("Height", Integer.parseInt(he));
-                                editor.apply();
-
-                            }
-                        });
-                alertDialogBuilderhei.setCancelable(true);
-                AlertDialog alertDialoghei = alertDialogBuilderhei.create();
-                alertDialoghei.show();
-                return true;
-
-            case 1:
-                Log.d("Menu","Select Menu B");
-                AlertDialog.Builder alertDialogBuildername = new AlertDialog.Builder(this);
-                LayoutInflater inflatername = (LayoutInflater)this.getSystemService(
-                        LAYOUT_INFLATER_SERVICE);
-                View viewname =  inflatername.inflate(R.layout.dialogname,
-                        (ViewGroup)findViewById(R.id.dialogname_layout));
-
-                nameEt = (EditText)viewname.findViewById(R.id.editText);
-                alertDialogBuildername.setTitle("名前設定");
-                alertDialogBuildername.setView(viewname);
-                alertDialogBuildername.setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                SharedPreferences data = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = data.edit();
-                                editor.putString("Name", nameEt.getEditableText().toString());
-                                editor.apply();
-
-                            }
-                        });
-                alertDialogBuildername.setCancelable(true);
-                AlertDialog alertDialogname = alertDialogBuildername.create();
-                alertDialogname.show();
-                return true;
-
-            case 2:
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                LayoutInflater inflater = (LayoutInflater)this.getSystemService(
-                        LAYOUT_INFLATER_SERVICE);
-                View view =  inflater.inflate(R.layout.opensourcelicense,
-                        (ViewGroup)findViewById(R.id.rootLayout));
-                alertDialogBuilder.setTitle("オープンソースライセンス");
-                alertDialogBuilder.setView(view);
-                alertDialogBuilder.setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                alertDialogBuilder.setCancelable(true);
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-                return true;
-
+        int len = 0;
+        for (LifeItem i : list) {
+            len++;
         }
-        return false;
+        Float[] wei = new Float[len];
+        for (LifeItem a : list) {
+            wei[s] = a.weight;
+            s++;
+        }
+
+        s = 0;
+        int num = wei.length;
+
+        int minus = 0;
+        if(day > num){
+            minus = 0;
+            day = num;
+        }else if (day < num){
+            minus = num - day;
+        }
+        GraphView.GraphViewData[] weiGraph;
+        if (num == 0){
+            weiGraph = new GraphView.GraphViewData[1];
+            weiGraph[0] = new GraphView.GraphViewData(0, 0);
+        }else {
+            weiGraph = new GraphView.GraphViewData[day];
+            for (int i = 0; i < day; i++) {
+                weiGraph[i] = new GraphView.GraphViewData(i, wei[minus]);
+                minus++;
+            }
+        }
+        return weiGraph;
+    }
+    public GraphView.GraphViewData[] getFATData(int day){
+        int s = 0;
+        List<LifeItem> list = new Select().from(LifeItem.class).execute();
+
+        int len = 0;
+        for (LifeItem i : list) {
+            len++;
+        }
+        int[] fat = new int[len];
+        for (LifeItem a : list) {
+            fat[s] = a.fat;
+            s++;
+        }
+
+        s = 0;
+        int num = fat.length;
+        int minus = 0;
+        if(day > num){
+            minus = 0;
+            day = num;
+        }else if (day < num){
+            minus = num - day;
+        }
+        GraphView.GraphViewData[] fatGraph;
+        if (num == 0){
+            fatGraph = new GraphView.GraphViewData[1];
+            fatGraph[0] = new GraphView.GraphViewData(0, 0);
+        }else {
+            fatGraph = new GraphView.GraphViewData[day];
+            for (int i = 0; i < day; i++) {
+                fatGraph[i] = new GraphView.GraphViewData(i, fat[minus]);
+                minus++;
+            }
+        }
+        return fatGraph;
+    }
+
+    public void listshow(int day){
+        int s = 0;
+        Map<String, String> data;
+        List<LifeItem> list1 = new Select().from(LifeItem.class).execute();
+        List<Map<String, String>> retDataList = new ArrayList<Map<String, String>>();
+        int len = 0;
+        for (LifeItem i : list1) {
+            len++;
+        }
+        Float[] weight = new Float[len];
+        int[] fat = new int[len];
+        String[] days = new String[len];
+        double[] bmi = new double[len];
+
+        for (LifeItem a : list1) {
+            weight[s] = a.weight;
+            fat[s] = a.fat;
+            days[s] = a.day;
+            bmi[s] = a.bmi;
+            s++;
+        }
+
+
+        int num = weight.length;
+        int minus = 0;
+        if(day > num){
+            minus = 0;
+            day = num;
+        }else if (day < num){
+            minus = num - day;
+        }
+        if (num == 0){
+            data = new HashMap<String, String>();
+            data.put("weight", "データがありません。記録画面から登録してください。");
+            data.put("comment","");
+
+            retDataList.add(data);
+        }else {
+            for (int i = 0; i < day; i++) {
+                data = new HashMap<String, String>();
+                data.put("weight", "体重:" + weight[minus] + "Kg" + "　体脂肪:" + fat[minus] + "%");
+                data.put("comment", "日付:" + days[minus] + "　BMI:" + bmi[minus] );
+                retDataList.add(data);
+                minus++;
+                Log.v("kp", "test");
+                SimpleAdapter adapter2 = new SimpleAdapter(LifeListFragment.act, retDataList,
+                        R.layout.raw, new String[] { "weight", "comment" },
+                        new int[] {R.id.textView1, R.id.textView2});
+                LifeListFragment.mListView.setAdapter(adapter2);
+            }
+        }
+
+
     }
 
 }
