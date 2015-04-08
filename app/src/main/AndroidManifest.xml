@@ -32,6 +32,10 @@
         </intent-filter>
 
         </activity>
+        <activity android:name=".OpenSourceLicenseActivity"
+            android:label="@string/app_name">
+
+            </activity>
     </application>
 
 </manifest>

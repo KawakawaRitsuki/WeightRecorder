@@ -3,6 +3,7 @@ package com.kawakawaplanning.weightrecorder;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +11,10 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -35,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
@@ -148,11 +155,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             switch (vp.getCurrentItem()){
 
                 case 0://リストページなら
+                    mImgitem2.setImageResource(R.drawable.ic_all);
+                    mImgitem3.setImageResource(R.drawable.ic_site);
+                    mImgitem4.setImageResource(R.drawable.ic_year);
+                    mImgitem5.setImageResource(R.drawable.ic_month);
+                    mImgitem6.setImageResource(R.drawable.ic_week);
                     mItem1Tv.setText("Item1");mItem2Tv.setText("全期間表示");mItem3Tv.setText("期間指定");
                     mItem4Tv.setText("１年分表示");mItem5Tv.setText("１ヶ月分表示");mItem6Tv.setText("１週間分表示");
                     ll[0].setVisibility(View.INVISIBLE);
                     break;
                 case 1://記録ページなら
+                    mImgitem5.setImageResource(R.drawable.ic_pen);
+                    mImgitem6.setImageResource(R.drawable.ic_pen);
                     mItem1Tv.setText("Item1");mItem2Tv.setText("Item2");mItem3Tv.setText("Item3");
                     mItem4Tv.setText("Item4");mItem5Tv.setText("名前変更");mItem6Tv.setText("身長変更");
                     ll[0].setVisibility(View.INVISIBLE);
@@ -161,6 +175,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     ll[3].setVisibility(View.INVISIBLE);
                     break;
                 case 2://マイページなら
+                    mImgitem5.setImageResource(R.drawable.ic_open);
+                    mImgitem6.setImageResource(R.drawable.ic_i);
                     mItem1Tv.setText("Item1");mItem2Tv.setText("Item2");mItem3Tv.setText("Item3");
                     mItem4Tv.setText("Item4");mItem5Tv.setText("オープンソースライセンス");mItem6Tv.setText("このアプリについて");
                     ll[0].setVisibility(View.INVISIBLE);
@@ -169,11 +185,21 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     ll[3].setVisibility(View.INVISIBLE);
                     break;
                 case 3://体重グラフなら
+                    mImgitem2.setImageResource(R.drawable.ic_all);
+                    mImgitem3.setImageResource(R.drawable.ic_site);
+                    mImgitem4.setImageResource(R.drawable.ic_year);
+                    mImgitem5.setImageResource(R.drawable.ic_month);
+                    mImgitem6.setImageResource(R.drawable.ic_week);
                     mItem1Tv.setText("Item1");mItem2Tv.setText("全期間表示");mItem3Tv.setText("期間指定");
                     mItem4Tv.setText("１年分表示");mItem5Tv.setText("１ヶ月分表示");mItem6Tv.setText("１週間分表示");
                     ll[0].setVisibility(View.INVISIBLE);
                     break;
                 case 4://血圧グラフなら
+                    mImgitem2.setImageResource(R.drawable.ic_all);
+                    mImgitem3.setImageResource(R.drawable.ic_site);
+                    mImgitem4.setImageResource(R.drawable.ic_year);
+                    mImgitem5.setImageResource(R.drawable.ic_month);
+                    mImgitem6.setImageResource(R.drawable.ic_week);
                     mItem1Tv.setText("Item1");mItem2Tv.setText("全期間表示");mItem3Tv.setText("期間指定");
                     mItem4Tv.setText("１年分表示");mItem5Tv.setText("１ヶ月分表示");mItem6Tv.setText("１週間分表示");
                     ll[0].setVisibility(View.INVISIBLE);
@@ -406,6 +432,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         LAYOUT_INFLATER_SERVICE);
                 View view =  inflater.inflate(R.layout.opensourcelicense,
                         (ViewGroup)findViewById(R.id.rootLayout));
+                        setSpannableString(view);
                 alertDialogBuilder.setTitle("オープンソースライセンス");
                 alertDialogBuilder.setView(view);
                 alertDialogBuilder.setPositiveButton("OK",
@@ -686,5 +713,49 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
 
     }
+    private void setSpannableString(View view) {
 
+        String message = "このソフトウェアは、オープンソースソフトウェアによって実現しました。";
+
+        // リンク化対象の文字列、リンク先 URL を指定する
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("オープンソースソフトウェア", "");
+
+        // SpannableString の取得
+        SpannableString ss = createSpannableString(message, map);
+
+        // SpannableString をセットし、リンクを有効化する
+        TextView textView = (TextView) view.findViewById(R.id.textView19);
+        textView.setText(ss);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+    private SpannableString createSpannableString(String message, Map<String, String> map) {
+
+        SpannableString ss = new SpannableString(message);
+
+        for (final Map.Entry<String, String> entry : map.entrySet()) {
+            int start = 0;
+            int end = 0;
+
+            // リンク化対象の文字列の start, end を算出する
+            Pattern pattern = Pattern.compile(entry.getKey());
+            Matcher matcher = pattern.matcher(message);
+            while (matcher.find()) {
+                start = matcher.start();
+                end = matcher.end();
+                break;
+            }
+
+            // SpannableString にクリックイベント、パラメータをセットする
+            ss.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    Intent intent = new Intent(getApplicationContext(), OpenSourceLicenseActivity.class);
+                    startActivity(intent);
+                }
+            }, start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        }
+
+        return ss;
+    }
 }

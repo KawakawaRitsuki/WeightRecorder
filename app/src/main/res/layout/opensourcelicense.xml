@@ -8,7 +8,8 @@
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:fillViewport="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +20,7 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="weightRecorder\nCopylight 2015 KawakawaPlanning All rights reserved.\nReleased under the MIT license" />
+                android:text="WeightRecorder\nCopylight 2015 KawakawaPlanning All rights reserved.\nReleased under the MIT license" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,7 +32,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="このソフトウェアは、オープンライセンスソフトウェアにより実現しました。"
+                android:text="このソフトウェアは、オープンソースソフトウェアによって実現しました。"
                 android:id="@+id/textView19" />
 
         </LinearLayout>

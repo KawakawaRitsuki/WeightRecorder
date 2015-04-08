@@ -87,8 +87,8 @@ public class PressGraphFragment extends Fragment{
             LineGraphView graphView = new LineGraphView(activity, "血圧の推移");
             int thickness = 10;//　線の太さ
 
-            GraphViewSeries.GraphViewSeriesStyle stylePuu = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#52bbbb"), thickness);
-            GraphViewSeries.GraphViewSeriesStyle stylePud = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#1e4343"), thickness);
+            GraphViewSeries.GraphViewSeriesStyle stylePuu = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#ff0000"), thickness);
+            GraphViewSeries.GraphViewSeriesStyle stylePud = new GraphViewSeries.GraphViewSeriesStyle(Color.parseColor("#0000ff"), thickness);
             GraphViewSeries seriesPuu = new GraphViewSeries("最高血圧", stylePuu, puuGraph);
             GraphViewSeries seriesPud = new GraphViewSeries("最低血圧", stylePud, pudGraph);
 
