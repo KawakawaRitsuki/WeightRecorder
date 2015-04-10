@@ -11,14 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.activeandroid.query.Select;
 import com.kawakawaplanning.weightrecorder.LifeItem;
 import com.kawakawaplanning.weightrecorder.R;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by KP on 2015/03/25.
@@ -34,6 +37,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
     private TextView mTextView4;
     private EditText mPressuredownET;
     private Button mCommitBtn;
+    private NumberPicker mNumberPicker;
     Vibrator vibrator;
 
     private void assignViews(View v) {
@@ -47,6 +51,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
         mPressuredownET = (EditText) v.findViewById(R.id.pressuredownET);
         mCommitBtn = (Button) v.findViewById(R.id.commitBtn);
         mCommitBtn.setOnClickListener(this);
+        mNumberPicker = (NumberPicker)v.findViewById(R.id.numberPicker);
         vibrator = (Vibrator) getActivity().getSystemService(getActivity().VIBRATOR_SERVICE);
     }
 
@@ -68,6 +73,25 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
 
     public void onStart(){
         super.onStart();
+        mNumberPicker.setMaxValue(10);
+        mNumberPicker.setMinValue(0);
+
+        List<LifeItem> list = new Select().from(LifeItem.class).execute();
+        Float weight = 0F;
+        int fat = 0;
+        int puu = 0;
+        int pud = 0;
+        for (LifeItem i : list) {
+            weight = i.weight;
+            fat = i.fat;
+            puu = i.puu;
+            pud = i.pud;
+        }
+        mweightET.setText(weight + "");
+        mFatET.setText(fat + "");
+        mPressureupET.setText(puu + "");
+        mPressuredownET.setText(pud + "");
+
     }
 
     @Override

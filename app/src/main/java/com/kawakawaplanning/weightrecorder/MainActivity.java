@@ -28,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.jjoe64.graphview.GraphView;
@@ -263,12 +262,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.imgitem1:
-                menu_close();
-                Toast.makeText(MainActivity.this, "Ktkr1", Toast.LENGTH_SHORT).show();
-                PressGraphFragment.drowGraph(getPUData( 3),getPDData(3));
-                menu_opened = false;
-                break;
             case R.id.imgitem2:
                 menu_close();
                 switch (vp.getCurrentItem()){
@@ -309,7 +302,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                                     public void onClick(DialogInterface dialog, int which) {
                                         
                                         String name = nameEt.getEditableText().toString();
-                                        listshow(Integer.parseInt(name));
+                                        if(!name.isEmpty())
+                                        {
+                                            listshow(Integer.parseInt(name));
+                                        }
                                     }
                                 });
                         alertDialogBuildername.setCancelable(true);
@@ -338,7 +334,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         String day = nameEt.getEditableText().toString();
-                                        WeightGraphFragment.drowGraph(getWTData(Integer.parseInt(day)), getFATData(Integer.parseInt(day)));
+                                        if(!day.isEmpty()) {
+                                            WeightGraphFragment.drowGraph(getWTData(Integer.parseInt(day)), getFATData(Integer.parseInt(day)));
+                                        }
                                     }
                                 });
                         alertDialogBuilderday.setCancelable(true);
@@ -361,8 +359,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         String day = nameEt.getEditableText().toString();
-                                        PressGraphFragment.drowGraph(getPUData(Integer.parseInt(day)), getPDData(Integer.parseInt(day)));
-
+                                        if (!day.isEmpty()) {
+                                            PressGraphFragment.drowGraph(getPUData(Integer.parseInt(day)), getPDData(Integer.parseInt(day)));
+                                        }
                                     }
                                 });
                         alertDialogBuilderday1.setCancelable(true);
@@ -414,12 +413,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-
-                                        SharedPreferences data = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = data.edit();
-                                        editor.putString("Name", nameEt.getEditableText().toString());
-                                        editor.apply();
-
+                                        String na = nameEt.getEditableText().toString();
+                                        if (!na.isEmpty()) {
+                                            SharedPreferences data = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = data.edit();
+                                            editor.putString("Name", na);
+                                            editor.apply();
+                                        }
                                     }
                                 });
                         alertDialogBuildername.setCancelable(true);
@@ -439,6 +439,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
                             }
                         });
                 alertDialogBuilder.setCancelable(true);
@@ -475,12 +476,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
-                                SharedPreferences data = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = data.edit();
                                 String he = heiEt.getEditableText().toString();
-                                editor.putInt("Height", Integer.parseInt(he));
-                                editor.apply();
+                                if (!he.isEmpty()) {
+                                    SharedPreferences data = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = data.edit();
+
+                                    editor.putInt("Height", Integer.parseInt(he));
+                                    editor.apply();
+                                }
 
                             }
                         });
