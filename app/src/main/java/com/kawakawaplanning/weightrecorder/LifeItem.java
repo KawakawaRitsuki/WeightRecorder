@@ -11,7 +11,7 @@ import com.activeandroid.annotation.Table;
 @Table(name = "weight_recorder")
 public class LifeItem extends Model {
 
-    //dat,weight,fat,puu,pud
+    //day,weight,fat,puu,pud
 
     @Column(name = "day")
     public String day;

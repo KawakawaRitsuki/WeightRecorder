@@ -9,7 +9,8 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:orientation="vertical"
@@ -21,27 +22,71 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="体重"
-                android:id="@+id/textView1" />
+                android:id="@+id/textView1"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <EditText
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:ems="10"
-                android:id="@+id/weightET"/>
+                android:background="#ffb0d7eb">
+
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/numberPicker" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="."
+                    android:id="@+id/textView30"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/numberPicker2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="kg"
+                    android:id="@+id/textView31"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="最高血圧"
-                android:id="@+id/textView3" />
+                android:id="@+id/textView3"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <EditText
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:ems="10"
-                android:id="@+id/pressureupET"/>
+                android:background="#ffc2ffb9">
+
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/numberPicker3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="mmHg"
+                    android:id="@+id/textView33"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -54,29 +99,60 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="体脂肪"
-                android:id="@+id/textView2" />
+                android:id="@+id/textView2"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <EditText
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:ems="10"
-                android:id="@+id/fatET"/>
+                android:background="#ffc2ffb9">
+
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/numberPicker4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="%"
+                    android:id="@+id/textView32"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="最低血圧"
-                android:id="@+id/textView4" />
+                android:id="@+id/textView4"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <EditText
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:ems="10"
-                android:id="@+id/pressuredownET"/>
+                android:layout_gravity="center_horizontal"
+                android:background="#ffd2d4eb">
 
+                <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/numberPicker5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="mmHg"
+                    android:id="@+id/textView34"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -87,13 +163,9 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Commit"
-            android:id="@+id/commitBtn"/>
+            android:text="登録"
+            android:id="@+id/commitBtn" />
 
     </LinearLayout>
 
-    <NumberPicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/numberPicker" />
 </LinearLayout>

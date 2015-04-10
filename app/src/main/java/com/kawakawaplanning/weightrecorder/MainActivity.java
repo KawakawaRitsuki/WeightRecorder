@@ -15,7 +15,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,13 +85,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             @Override
             public void onPageScrollStateChanged(int state) {
                 if (ViewPager.SCROLL_STATE_DRAGGING == state) {
-                    // スライド検知a
+                    // スライド検知
                     onKieru();
                 }
             }
         });
         findItemView();
-
+//        LifeItem item = LifeItem.load(LifeItem.class, 4);
     }
 
     public void onResume() {
@@ -673,14 +672,20 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
         Float[] weight = new Float[len];
         int[] fat = new int[len];
+        int[] puu = new int[len];
+        int[] pud = new int[len];
         String[] days = new String[len];
         double[] bmi = new double[len];
+        long[] id = new long[len];
 
         for (LifeItem a : list1) {
             weight[s] = a.weight;
             fat[s] = a.fat;
             days[s] = a.day;
             bmi[s] = a.bmi;
+            puu[s] = a.puu;
+            pud[s] = a.pud;
+            id[s] = a.getId();
             s++;
         }
 
@@ -695,26 +700,28 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
         if (num == 0){
             data = new HashMap<String, String>();
-            data.put("weight", "データがありません。記録画面から登録してください。");
-            data.put("comment","");
+            data.put("day", "データがありません。記録画面から登録してください。");
+            data.put("weight","");
+            data.put("pu","");
+            data.put("id", "");
 
             retDataList.add(data);
         }else {
             for (int i = 0; i < day; i++) {
                 data = new HashMap<String, String>();
-                data.put("weight", "体重:" + weight[minus] + "Kg" + "　体脂肪:" + fat[minus] + "%");
-                data.put("comment", "日付:" + days[minus] + "　BMI:" + bmi[minus] );
+                data.put("day", days[minus]);
+                data.put("weight", "　　体重:" + weight[minus] + "kg　体脂肪:" + fat[minus] + "%");
+                data.put("pu", "　　血圧:" + puu[minus] + "/" + pud[minus] + "　BMI:" + bmi[minus]);
+                data.put("id", id[minus] + "");
                 retDataList.add(data);
                 minus++;
-                Log.v("kp", "test");
                 SimpleAdapter adapter2 = new SimpleAdapter(LifeListFragment.act, retDataList,
-                        R.layout.raw, new String[] { "weight", "comment" },
-                        new int[] {R.id.textView1, R.id.textView2});
+                        R.layout.raw, new String[] { "day", "weight" ,"pu" ,"id" },
+                        new int[] {R.id.textView1, R.id.textView2, R.id.textView3, R.id.textViewId});
                 LifeListFragment.mListView.setAdapter(adapter2);
             }
+
         }
-
-
     }
     private void setSpannableString(View view) {
 

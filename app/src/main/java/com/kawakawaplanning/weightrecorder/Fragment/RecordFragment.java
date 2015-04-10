@@ -1,5 +1,6 @@
 package com.kawakawaplanning.weightrecorder.Fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,9 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.kawakawaplanning.weightrecorder.LifeItem;
@@ -28,30 +28,26 @@ import java.util.List;
  */
 public class RecordFragment extends Fragment implements View.OnClickListener{
 
-    private TextView mTextView1;
-    private EditText mweightET;
-    private TextView mTextView3;
-    private EditText mPressureupET;
-    private TextView mTextView2;
-    private EditText mFatET;
-    private TextView mTextView4;
-    private EditText mPressuredownET;
+//    private EditText mweightET;
     private Button mCommitBtn;
     private NumberPicker mNumberPicker;
+    private NumberPicker mNumberPicker2;
+    private NumberPicker mNumberPicker3;
+    private NumberPicker mNumberPicker4;
+    private NumberPicker mNumberPicker5;
+    public static Activity act;
+
     Vibrator vibrator;
 
     private void assignViews(View v) {
-        mTextView1 = (TextView) v.findViewById(R.id.textView1);
-        mweightET = (EditText) v.findViewById(R.id.weightET);
-        mTextView3 = (TextView) v.findViewById(R.id.textView3);
-        mPressureupET = (EditText) v.findViewById(R.id.pressureupET);
-        mTextView2 = (TextView) v.findViewById(R.id.textView2);
-        mFatET = (EditText) v.findViewById(R.id.fatET);
-        mTextView4 = (TextView) v.findViewById(R.id.textView4);
-        mPressuredownET = (EditText) v.findViewById(R.id.pressuredownET);
+//        mweightET = (EditText) v.findViewById(R.id.weightET);
         mCommitBtn = (Button) v.findViewById(R.id.commitBtn);
         mCommitBtn.setOnClickListener(this);
         mNumberPicker = (NumberPicker)v.findViewById(R.id.numberPicker);
+        mNumberPicker2 = (NumberPicker)v.findViewById(R.id.numberPicker2);
+        mNumberPicker3 = (NumberPicker)v.findViewById(R.id.numberPicker3);
+        mNumberPicker4 = (NumberPicker)v.findViewById(R.id.numberPicker4);
+        mNumberPicker5 = (NumberPicker)v.findViewById(R.id.numberPicker5);
         vibrator = (Vibrator) getActivity().getSystemService(getActivity().VIBRATOR_SERVICE);
     }
 
@@ -66,15 +62,23 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_record, container, false);
-
+        act = getActivity();
         assignViews(v);
         return v;
     }
 
     public void onStart(){
         super.onStart();
-        mNumberPicker.setMaxValue(10);
+        mNumberPicker.setMaxValue(200);
         mNumberPicker.setMinValue(0);
+        mNumberPicker2.setMaxValue(9);
+        mNumberPicker2.setMinValue(0);
+        mNumberPicker3.setMaxValue(300);
+        mNumberPicker3.setMinValue(0);
+        mNumberPicker4.setMaxValue(100);
+        mNumberPicker4.setMinValue(0);
+        mNumberPicker5.setMaxValue(300);
+        mNumberPicker5.setMinValue(0);
 
         List<LifeItem> list = new Select().from(LifeItem.class).execute();
         Float weight = 0F;
@@ -87,10 +91,19 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
             puu = i.puu;
             pud = i.pud;
         }
-        mweightET.setText(weight + "");
-        mFatET.setText(fat + "");
-        mPressureupET.setText(puu + "");
-        mPressuredownET.setText(pud + "");
+        double seisuu = Math.floor(weight);
+        double syousuu = weight - seisuu;
+
+        mNumberPicker.setValue((int)seisuu);
+        mNumberPicker2.setValue((int)(syousuu * 10));
+        mNumberPicker3.setValue(puu);
+        mNumberPicker4.setValue(fat);
+        mNumberPicker5.setValue(pud);
+
+//        mweightET.setText(weight + "");
+//        mFatET.setText(fat + "");
+//        mPressureupET.setText(puu + "");
+//        mPressuredownET.setText(pud + "");
 
     }
 
@@ -98,32 +111,11 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
 
      vibrator.vibrate(50);
-
+        Toast.makeText(getActivity(),"記録しました。",Toast.LENGTH_SHORT).show();
         switch (v.getId()) {
 
             case R.id.commitBtn:
-
-                Boolean flag = false;
-                if (mweightET.length() == 0){
-                    mweightET.setError("入力してください。");
-                    flag = true;
-                }
-                if (mFatET.length() == 0){
-                    mFatET.setError("入力してください。");
-                    flag = true;
-                }
-                if (mPressuredownET.length() == 0){
-                    mPressuredownET.setError("入力してください。");
-                    flag = true;
-                }
-                if (mPressureupET.length() == 0){
-                    mPressureupET.setError("入力してください。");
-                    flag = true;
-                }
-                if (!flag){
                     commit();
-                }
-
                 break;
 
 
@@ -132,10 +124,11 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
     }
 
     public void commit(){
-        float getweight = Float.parseFloat(mweightET.getEditableText().toString());
-        int getFat = Integer.parseInt(mFatET.getEditableText().toString());
-        int getPuu = Integer.parseInt(mPressureupET.getEditableText().toString());
-        int getPud = Integer.parseInt(mPressuredownET.getEditableText().toString());
+        String getWeightStr = mNumberPicker.getValue() + "." + mNumberPicker2.getValue();
+        float getweight = Float.parseFloat(getWeightStr);
+        int getFat = mNumberPicker4.getValue();
+        int getPuu = mNumberPicker3.getValue();
+        int getPud = mNumberPicker5.getValue();
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -147,7 +140,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
         lifeItem.puu = getPuu;
         lifeItem.pud = getPud;
 
-        double bmi = bmi(Float.parseFloat(mweightET.getEditableText().toString()));
+        double bmi = bmi(getweight);
         lifeItem.bmi = bmi;
 
         lifeItem.save();
@@ -156,9 +149,9 @@ public class RecordFragment extends Fragment implements View.OnClickListener{
 
 
 
-    public double bmi(float weight){
+    public static double bmi(float weight){
 
-        SharedPreferences data = getActivity().getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        SharedPreferences data = act.getSharedPreferences("DataSave", Context.MODE_PRIVATE);
         double height = data.getInt("Height",-1 ) / 100F;
 
 

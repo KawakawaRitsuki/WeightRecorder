@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class PressGraphFragment extends Fragment{
         for (LifeItem a : list) {
             puu[s] = a.puu;
             pud[s] = a.pud;
+            Log.v("kp", a.getId()+"");
             s++;
         }
 

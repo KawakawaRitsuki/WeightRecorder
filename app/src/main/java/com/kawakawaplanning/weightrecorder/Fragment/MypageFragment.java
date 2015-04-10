@@ -30,7 +30,9 @@ public class MypageFragment extends Fragment implements View.OnClickListener{
     TextView haiTv;
     TextView name1Tv;
     TextView name2Tv;
+    TextView bmiTv;
     float latistweight;
+    double latistBmi;
     int latistFat;
     PullRefreshLayout layout;
 
@@ -39,6 +41,7 @@ public class MypageFragment extends Fragment implements View.OnClickListener{
         wigTv = (TextView) v.findViewById(R.id.textView13);
         fatTv = (TextView) v.findViewById(R.id.textView15);
         haiTv = (TextView) v.findViewById(R.id.textView17);
+        bmiTv = (TextView) v.findViewById(R.id.textView40);
         name1Tv = (TextView) v.findViewById(R.id.textView8);
         name2Tv = (TextView) v.findViewById(R.id.textView10);
         layout = (PullRefreshLayout) v.findViewById(R.id.swipeRefreshLayout);
@@ -83,6 +86,7 @@ public class MypageFragment extends Fragment implements View.OnClickListener{
         for (LifeItem i : list) {
             latistweight = i.weight;
             latistFat = i.fat;
+            latistBmi = i.bmi;
         }
         SharedPreferences data = getActivity().getSharedPreferences("DataSave", Context.MODE_PRIVATE);
         int height = data.getInt("Height",0 );
@@ -94,6 +98,7 @@ public class MypageFragment extends Fragment implements View.OnClickListener{
         wigTv.setText(latistweight+ "kg");
         fatTv.setText(latistFat+"%");
         haiTv.setText(height+"cm");
+        bmiTv.setText(latistBmi+"");
 
         PieSlice slice = new PieSlice();
         graph.removeSlices();
