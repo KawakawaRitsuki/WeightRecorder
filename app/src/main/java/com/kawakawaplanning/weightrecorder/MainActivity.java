@@ -1,12 +1,18 @@
 package com.kawakawaplanning.weightrecorder;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -15,6 +21,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 import com.jjoe64.graphview.GraphView;
@@ -34,7 +42,13 @@ import com.kawakawaplanning.weightrecorder.Fragment.LifeListFragment;
 import com.kawakawaplanning.weightrecorder.Fragment.PressGraphFragment;
 import com.kawakawaplanning.weightrecorder.Fragment.WeightGraphFragment;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +69,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     float scaled_px2 = 0;
     static boolean menu_opened = false;// メニュータップフラグ
     private static final long ANIMATION_TIMES = 100;//ミリ秒
+    public static Activity act;
+    public Vibrator vib;
 
     private ImageView mImgitem1;
     private TextView mItem1Tv;
@@ -76,6 +92,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         setState(PREFERENCE_BOOTED);
 
+        vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+        act = this;
+        SharedPreferences prefs = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("pass", null);//削除
+        editor.apply();
+
         vp = (ViewPager)findViewById(R.id.mypager);//定義
         vp.setAdapter(new PAdapter(this.getSupportFragmentManager()));//アダプタ入れる
         vp.setCurrentItem(2);
@@ -91,7 +115,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
         });
         findItemView();
-//        LifeItem item = LifeItem.load(LifeItem.class, 4);
+
     }
 
     public void onResume() {
@@ -141,6 +165,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void plus_ic(View v) {
         // フラグ管理
 
+        vib.vibrate(50);
+
         rootLo.setBackgroundColor(Color.parseColor("#880c1b1b"));
 
         if (menu_opened == false) {
@@ -173,10 +199,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     ll[3].setVisibility(View.INVISIBLE);
                     break;
                 case 2://マイページなら
-                    mImgitem5.setImageResource(R.drawable.ic_open);
+                    mImgitem5.setImageResource(R.drawable.ic_pen);
                     mImgitem6.setImageResource(R.drawable.ic_i);
                     mItem1Tv.setText("Item1");mItem2Tv.setText("Item2");mItem3Tv.setText("Item3");
-                    mItem4Tv.setText("Item4");mItem5Tv.setText("オープンソースライセンス");mItem6Tv.setText("このアプリについて");
+                    mItem4Tv.setText("");mItem5Tv.setText("CSVで書き出し");mItem6Tv.setText("オープンソースライセンス");
                     ll[0].setVisibility(View.INVISIBLE);
                     ll[1].setVisibility(View.INVISIBLE);
                     ll[2].setVisibility(View.INVISIBLE);
@@ -259,7 +285,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        vib.vibrate(10);
         switch (v.getId()) {
             case R.id.imgitem2:
                 menu_close();
@@ -426,24 +452,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         alertDialogname.show();
                         break;
                     case 2://3ページ目の時
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                LayoutInflater inflater = (LayoutInflater)this.getSystemService(
-                        LAYOUT_INFLATER_SERVICE);
-                View view =  inflater.inflate(R.layout.opensourcelicense,
-                        (ViewGroup)findViewById(R.id.rootLayout));
-                        setSpannableString(view);
-                alertDialogBuilder.setTitle("オープンソースライセンス");
-                alertDialogBuilder.setView(view);
-                alertDialogBuilder.setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                alertDialogBuilder.setCancelable(true);
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                        outCsv();
                         break;
                     case 3://4ページ目の時
                         WeightGraphFragment.drowGraph(getWTData(30), getFATData(30));
@@ -492,7 +501,24 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                         break;
                     case 2://3ページ目の時
 
-                        break;
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                        LayoutInflater inflater = (LayoutInflater)this.getSystemService(
+                                LAYOUT_INFLATER_SERVICE);
+                        View view =  inflater.inflate(R.layout.opensourcelicense,
+                                (ViewGroup)findViewById(R.id.rootLayout));
+                        setSpannableString(view);
+                        alertDialogBuilder.setTitle("オープンソースライセンス");
+                        alertDialogBuilder.setView(view);
+                        alertDialogBuilder.setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+                        alertDialogBuilder.setCancelable(true);
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();                        break;
                     case 3://4ページ目の時
                         WeightGraphFragment.drowGraph(getWTData(7), getFATData(7));
                         break;
@@ -767,5 +793,81 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
 
         return ss;
+    }
+    public void showNotification(){
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_VIEW);
+        i.setClassName("com.kawakawaplanning.weightrecorder", "com.kawakawaplanning.weightrecorder.StartActivity");
+
+
+        PendingIntent pendingIntent
+                = PendingIntent.getActivity(act,0,i,0);
+
+        Notification notification = new Notification.Builder(act)
+                .setContentTitle("体重と血圧を測りましょう！")
+                .setContentText("記録するにはタップしてください。")
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(true)
+                .build();
+
+        NotificationManager nm = (NotificationManager)
+                getSystemService(Context.NOTIFICATION_SERVICE);
+
+        nm.notify(1000, notification);
+    }
+
+    public void outCsv(){
+        Log.v("kp", Environment.getExternalStorageDirectory()+"");
+        File folder = new File(Environment.getExternalStorageDirectory()+"/WeightRecorder/");
+        if (!folder.exists()){
+            mkdir(Environment.getExternalStorageDirectory()+"/WeightRecorder/");
+        }
+
+        try{
+            Calendar cal = Calendar.getInstance();
+            File file = new File(Environment.getExternalStorageDirectory()+"/WeightRecorder/Data_" + cal.get(Calendar.YEAR) + "-" + cal.get(Calendar.MONTH) + "-" + cal.get(Calendar.DATE) + "_" + cal.get(Calendar.HOUR) + "-" + cal.get(Calendar.MINUTE)  + "-" + cal.get(Calendar.SECOND) + ".csv");
+            FileWriter fw = new FileWriter(file);  //※1
+            PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+            pw.print("日付");
+            pw.print(",");
+            pw.print("体重");
+            pw.print(",");
+            pw.print("体脂肪");
+            pw.print(",");
+            pw.print("最高血圧");
+            pw.print(",");
+            pw.print("最低血圧");
+            pw.print(",");
+            pw.print("BMI");
+            pw.println();
+
+            List<LifeItem> list = new Select().from(LifeItem.class).execute();
+            for (LifeItem i : list) {
+                pw.print(i.day);
+                pw.print(",");
+                pw.print(i.weight);
+                pw.print(",");
+                pw.print(i.fat);
+                pw.print(",");
+                pw.print(i.puu);
+                pw.print(",");
+                pw.print(i.pud);
+                pw.print(",");
+                pw.print(i.bmi);
+                pw.println();
+            }
+
+            pw.close();
+            Toast.makeText(this,"WeightRecorderフォルダに保存されました。",Toast.LENGTH_SHORT).show();
+
+        } catch (IOException ex) {
+            //例外時処理
+            Toast.makeText(this,"保存できませんでした。",Toast.LENGTH_SHORT).show();
+        }
+    }
+    public boolean mkdir(String path){
+        File file = new File(path);
+        return file.mkdir();
     }
 }

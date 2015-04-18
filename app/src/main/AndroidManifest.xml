@@ -5,7 +5,8 @@
     <uses-sdk
         android:minSdkVersion="22"></uses-sdk>
     <uses-permission android:name="android.permission.VIBRATE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:name="com.activeandroid.app.Application"
         android:allowBackup="true"

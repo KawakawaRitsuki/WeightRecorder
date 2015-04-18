@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="[WeightRecorder]をご利用くださいましてありがとうございます。\n快適にご利用いただくために、最初に少しだけあなたについて教えてください！"
+        android:text="[WeightRecorder]をダウンロードしていただきありがとうございます。\n快適にご利用いただくために、最初に少しだけあなたについて教えてください！"
         android:id="@+id/textView21" />
 
     <LinearLayout

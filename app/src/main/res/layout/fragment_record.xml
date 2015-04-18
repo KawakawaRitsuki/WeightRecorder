@@ -29,7 +29,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ffb0d7eb">
+                android:background="#ffd2d4eb">
 
                 <NumberPicker
                     android:layout_width="wrap_content"
@@ -155,17 +155,12 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="登録"
-            android:id="@+id/commitBtn" />
-
-    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登録"
+        android:id="@+id/commitBtn"
+        android:layout_gravity="center_horizontal"
+        android:background="#ff989bff" />
 
 </LinearLayout>

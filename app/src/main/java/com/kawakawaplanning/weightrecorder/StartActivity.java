@@ -56,9 +56,9 @@ public class StartActivity extends ActionBarActivity{
             mEditText3.setVisibility(View.GONE);
             mEditText4.setVisibility(View.GONE);
             SharedPreferences prefs = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
-            getPass = prefs.getString("pass", "-dj#sf+djk");//絶対にない（と思う）PW
+            getPass = prefs.getString("pass", "kawa");//絶対にない（桁数的に）PW
 
-            if(getPass.equals("-dj#sf+djk")){
+            if(getPass.equals("kawa")){
 
                 Intent intent=new Intent();
                 intent.setClassName("com.kawakawaplanning.weightrecorder","com.kawakawaplanning.weightrecorder.MainActivity");
@@ -121,7 +121,7 @@ public class StartActivity extends ActionBarActivity{
                     }
                 }else if (1 == getState()){
                     SharedPreferences prefs = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
-                    getPass = prefs.getString("pass", "");//絶対にない（と思う）PW
+                    getPass = prefs.getString("pass", "");
                     if(getPass.equals(mEditText2.getText().toString())){
                         Intent intent=new Intent();
                         intent.setClassName("com.kawakawaplanning.weightrecorder","com.kawakawaplanning.weightrecorder.MainActivity");
